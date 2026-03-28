@@ -1,0 +1,23 @@
+# dependencies
+node_modules
+.pnpm-store
+
+# build
+.turbo
+.next
+dist
+coverage
+
+# env
+.env
+.env.*
+!.env.example
+
+# prisma
+*.db
+*.db-journal
+
+# misc
+.DS_Store
+*.log
+.local/

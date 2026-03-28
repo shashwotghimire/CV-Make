@@ -1,0 +1,19 @@
+{
+  "name": "@cvmake/ui",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.tsx",
+  "types": "./src/index.tsx",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "echo 'No lint for @cvmake/ui'",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14"
+  }
+}

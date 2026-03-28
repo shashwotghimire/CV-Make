@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f7f4ea;
+  --foreground: #14213d;
+  --panel: #fffdf6;
+  --accent: #b45309;
+  --accent-soft: #fde68a;
+  --muted: #5b6473;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-panel: var(--panel);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-muted: var(--muted);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: rgba(180, 83, 9, 0.18);
+}
+
+.mesh-bg {
+  background-image:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.16), transparent 32%),
+    radial-gradient(circle at 85% 20%, rgba(20, 33, 61, 0.12), transparent 28%),
+    linear-gradient(180deg, rgba(255, 253, 246, 0.94), rgba(247, 244, 234, 0.98));
+}
+
+.input-base {
+  @apply w-full rounded-2xl border border-black/10 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-amber-500 focus:ring-4 focus:ring-amber-100;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-slate-950 px-5 py-3 text-sm font-medium text-white transition hover:bg-slate-800;
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full border border-black/10 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition hover:border-amber-300 hover:text-slate-950;
+}
+
+.label-text {
+  @apply mb-2 block text-xs font-semibold uppercase tracking-[0.2em] text-slate-500;
+}

@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ItemType {
+  PROJECT
+  EXPERIENCE
+  EDUCATION
+  SKILL
+  CERTIFICATION
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  clerkUserId String   @unique
+  phone       String?
+  location    String?
+  linkedin    String?
+  github      String?
+  website     String?
+  bio         String?
+  role        Role     @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  items Item[]
+  cvs   CV[]
+}
+
+model Item {
+  id             String   @id @default(cuid())
+  profileId      String
+  profile        Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  type           ItemType
+  title          String
+  subtitle       String?
+  description    String?
+  bullets        String[]
+  technologies   String[]
+  tags           String[]
+  dateStart      DateTime?
+  dateEnd        DateTime?
+  url            String?
+  meta           Json
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  cvSectionItems CVSectionItem[]
+}
+
+model CV {
+  id                String    @id @default(cuid())
+  profileId         String
+  profile           Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  name              String
+  templateId        String
+  template          Template  @relation(fields: [templateId], references: [id])
+  hasPendingUpdates Boolean   @default(false)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  sections CVSection[]
+}
+
+model CVSection {
+  id        String          @id @default(cuid())
+  cvId      String
+  cv        CV              @relation(fields: [cvId], references: [id], onDelete: Cascade)
+  title     String
+  order     Int
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  items     CVSectionItem[]
+}
+
+model CVSectionItem {
+  id            String    @id @default(cuid())
+  sectionId     String
+  section       CVSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  itemId        String
+  item          Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  order         Int
+  customBullets String[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([sectionId, itemId])
+}
+
+model Template {
+  id           String   @id @default(cuid())
+  name         String
+  thumbnailUrl String
+  previewUrl   String
+  templateHtml String
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  cvs CV[]
+}

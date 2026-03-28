@@ -1,0 +1,259 @@
+"use client";
+
+import { useState, useTransition } from "react";
+import type { ItemType } from "@cvmake/types";
+
+type ItemRecord = {
+  id: string;
+  type: ItemType;
+  title: string;
+  description: string | null;
+  tags: string[];
+  technologies: string[];
+};
+
+type CVOption = {
+  id: string;
+  name: string;
+};
+
+export function ItemsManager({
+  items,
+  cvOptions,
+}: {
+  items: ItemRecord[];
+  cvOptions: CVOption[];
+}) {
+  const [message, setMessage] = useState<string | null>(null);
+  const [pending, startTransition] = useTransition();
+  const [typeFilter, setTypeFilter] = useState<string>("ALL");
+  const [propagationItemId, setPropagationItemId] = useState<string | null>(null);
+  const [selectedCVIds, setSelectedCVIds] = useState<string[]>([]);
+
+  const filteredItems =
+    typeFilter === "ALL" ? items : items.filter((item) => item.type === typeFilter);
+
+  async function handleCreate(formData: FormData) {
+    setMessage(null);
+
+    startTransition(async () => {
+      const payload = {
+        type: formData.get("type"),
+        title: formData.get("title"),
+        description: formData.get("description") || null,
+        bullets: [],
+        technologies: String(formData.get("technologies") ?? "")
+          .split(",")
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+        tags: String(formData.get("tags") ?? "")
+          .split(",")
+          .map((entry) => entry.trim())
+          .filter(Boolean),
+        meta: {},
+      };
+
+      const response = await fetch("/api/items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        setMessage("Create failed.");
+        return;
+      }
+
+      const created = (await response.json()) as {
+        id: string;
+        propagationOptions: CVOption[];
+      };
+
+      if (created.propagationOptions.length) {
+        setPropagationItemId(created.id);
+        setSelectedCVIds(created.propagationOptions.map((entry) => entry.id));
+        setMessage("Item created. Choose CVs to propagate it.");
+        return;
+      }
+
+      setMessage("Item created.");
+      window.location.reload();
+    });
+  }
+
+  async function handleDelete(id: string) {
+    startTransition(async () => {
+      const response = await fetch(`/api/items/${id}`, { method: "DELETE" });
+      if (!response.ok) {
+        setMessage("Delete failed.");
+        return;
+      }
+
+      setMessage("Item removed.");
+      window.location.reload();
+    });
+  }
+
+  async function propagateToSelected() {
+    if (!propagationItemId || !selectedCVIds.length) {
+      setMessage("Select at least one CV or skip.");
+      return;
+    }
+
+    startTransition(async () => {
+      const response = await fetch(`/api/items/${propagationItemId}/propagate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cvIds: selectedCVIds }),
+      });
+
+      if (!response.ok) {
+        setMessage("Propagation failed.");
+        return;
+      }
+
+      setMessage("Item propagated.");
+      window.location.reload();
+    });
+  }
+
+  function toggleCV(cvId: string) {
+    setSelectedCVIds((current) =>
+      current.includes(cvId) ? current.filter((entry) => entry !== cvId) : [...current, cvId],
+    );
+  }
+
+  return (
+    <div className="grid gap-6 xl:grid-cols-[360px,1fr]">
+      <form action={handleCreate} className="rounded-3xl border border-black/10 bg-white p-5">
+        <h2 className="text-lg font-semibold text-slate-950">Add item</h2>
+        <div className="mt-4 space-y-4">
+          <label>
+            <span className="label-text">Type</span>
+            <select className="input-base" name="type" defaultValue="PROJECT">
+              <option value="PROJECT">Project</option>
+              <option value="EXPERIENCE">Experience</option>
+              <option value="EDUCATION">Education</option>
+              <option value="SKILL">Skill</option>
+              <option value="CERTIFICATION">Certification</option>
+            </select>
+          </label>
+          <label>
+            <span className="label-text">Title</span>
+            <input className="input-base" name="title" required />
+          </label>
+          <label>
+            <span className="label-text">Description</span>
+            <textarea className="input-base min-h-28" name="description" />
+          </label>
+          <label>
+            <span className="label-text">Technologies</span>
+            <input className="input-base" name="technologies" placeholder="Next.js, Prisma, Clerk" />
+          </label>
+          <label>
+            <span className="label-text">Tags</span>
+            <input className="input-base" name="tags" placeholder="frontend, featured" />
+          </label>
+          <button className="btn-primary w-full" disabled={pending} type="submit">
+            {pending ? "Saving..." : "Create item"}
+          </button>
+          {message ? <p className="text-sm text-slate-600">{message}</p> : null}
+        </div>
+      </form>
+
+      <div className="space-y-4">
+        {propagationItemId ? (
+          <div className="rounded-3xl border border-amber-300 bg-amber-50 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+              Propagation prompt
+            </p>
+            <h2 className="mt-2 text-lg font-semibold text-slate-950">
+              Add this new item to existing CVs
+            </h2>
+            <div className="mt-4 grid gap-2">
+              {cvOptions.map((cv) => (
+                <label key={cv.id} className="flex items-center gap-3 rounded-2xl bg-white px-4 py-3">
+                  <input
+                    checked={selectedCVIds.includes(cv.id)}
+                    onChange={() => toggleCV(cv.id)}
+                    type="checkbox"
+                  />
+                  <span className="text-sm text-slate-700">{cv.name}</span>
+                </label>
+              ))}
+            </div>
+            <div className="mt-4 flex gap-3">
+              <button className="btn-primary" disabled={pending} onClick={propagateToSelected} type="button">
+                Add to selected CVs
+              </button>
+              <button
+                className="btn-secondary"
+                onClick={() => {
+                  setPropagationItemId(null);
+                  setMessage("Propagation skipped.");
+                  window.location.reload();
+                }}
+                type="button"
+              >
+                Skip
+              </button>
+            </div>
+          </div>
+        ) : null}
+        <div className="flex items-center justify-between gap-4 rounded-3xl border border-black/10 bg-white p-4">
+          <div>
+            <p className="text-sm font-medium text-slate-950">Master item pool</p>
+            <p className="text-sm text-slate-600">Filter by item type. Tags stay visible on each card.</p>
+          </div>
+          <select
+            className="input-base max-w-44"
+            value={typeFilter}
+            onChange={(event) => setTypeFilter(event.target.value)}
+          >
+            <option value="ALL">All</option>
+            <option value="PROJECT">Project</option>
+            <option value="EXPERIENCE">Experience</option>
+            <option value="EDUCATION">Education</option>
+            <option value="SKILL">Skill</option>
+            <option value="CERTIFICATION">Certification</option>
+          </select>
+        </div>
+        <div className="grid gap-4">
+          {filteredItems.map((item) => (
+            <article key={item.id} className="rounded-3xl border border-black/10 bg-white p-5">
+              <div className="flex items-start justify-between gap-4">
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+                    {item.type}
+                  </p>
+                  <h3 className="text-lg font-semibold text-slate-950">{item.title}</h3>
+                  <p className="text-sm text-slate-600">{item.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs">
+                        {tag}
+                      </span>
+                    ))}
+                    {item.technologies.map((tech) => (
+                      <span key={tech} className="rounded-full bg-amber-100 px-3 py-1 text-xs">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <button className="btn-secondary" onClick={() => handleDelete(item.id)} type="button">
+                  Delete
+                </button>
+              </div>
+            </article>
+          ))}
+          {!filteredItems.length ? (
+            <div className="rounded-3xl border border-dashed border-black/20 bg-white/70 p-8 text-sm text-slate-500">
+              No items in this filter yet.
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
