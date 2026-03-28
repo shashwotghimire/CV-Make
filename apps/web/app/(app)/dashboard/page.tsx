@@ -30,7 +30,7 @@ export default async function DashboardPage() {
           hasPendingUpdates: cv.hasPendingUpdates,
           template: {
             name: cv.template.name,
-            thumbnailUrl: cv.template.thumbnailUrl,
+            imageUrl: cv.template.previewUrl,
           },
         }))}
       />

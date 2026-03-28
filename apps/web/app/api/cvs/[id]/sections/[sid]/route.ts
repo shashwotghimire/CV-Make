@@ -32,6 +32,7 @@ export async function PUT(
     data: {
       title: payload.title,
       order: payload.order,
+      summaryBullets: payload.summaryBullets,
     },
   });
 

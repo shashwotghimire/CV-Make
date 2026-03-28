@@ -6,20 +6,17 @@ import { getCVRenderPayload, renderCVHtml } from "@/lib/render-cv";
 import { requireReadyProfile } from "@/lib/profile-guard";
 import { slugify } from "@/lib/utils";
 
-export async function POST(
-  _request: Request,
-  { params }: { params: Promise<{ cvId: string }> },
-) {
-  const { cvId } = await params;
-  const { profile } = await requireReadyProfile();
+const localChromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+
+async function buildPdf(cvId: string, profileId: string) {
   const user = await currentUser();
   const cv = await prisma.cV.findFirst({
-    where: { id: cvId, profileId: profile.id },
+    where: { id: cvId, profileId },
     include: { template: true },
   });
 
   if (!cv || !user) {
-    return NextResponse.json({ error: "CV not found" }, { status: 404 });
+    return null;
   }
 
   const payload = await getCVRenderPayload(cv.id, {
@@ -29,22 +26,72 @@ export async function POST(
   });
 
   if (!payload) {
-    return NextResponse.json({ error: "Payload not found" }, { status: 404 });
+    return null;
   }
 
   const html = renderCVHtml(payload, cv.template.templateHtml);
+  const { launch } = await import("puppeteer");
+  const browser = await launch({
+    executablePath: localChromePath,
+    headless: true,
+  });
+  const page = await browser.newPage();
+  await page.setContent(html, { waitUntil: "networkidle0" });
+  const pdf = await page.pdf({ format: "A4", printBackground: true });
+  await browser.close();
+
+  return {
+    cv,
+    pdf,
+  };
+}
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ cvId: string }> },
+) {
+  const { cvId } = await params;
+  const { profile } = await requireReadyProfile();
 
   try {
-    const { launch } = await import("puppeteer");
-    const browser = await launch();
-    const page = await browser.newPage();
-    await page.setContent(html, { waitUntil: "networkidle0" });
-    const pdf = await page.pdf({ format: "A4", printBackground: true });
-    await browser.close();
+    const result = await buildPdf(cvId, profile.id);
+
+    if (!result) {
+      return NextResponse.json({ error: "CV not found" }, { status: 404 });
+    }
+
+    return new NextResponse(Buffer.from(result.pdf), {
+      headers: {
+        "Content-Type": "application/pdf",
+        "Content-Disposition": `inline; filename="${slugify(result.cv.name)}.pdf"`,
+      },
+    });
+  } catch (error) {
+    console.error("PDF preview failed", error);
+    return NextResponse.json(
+      { error: "Preview failed. Check Puppeteer configuration." },
+      { status: 500 },
+    );
+  }
+}
+
+export async function POST(
+  _request: Request,
+  { params }: { params: Promise<{ cvId: string }> },
+) {
+  const { cvId } = await params;
+  const { profile } = await requireReadyProfile();
+
+  try {
+    const result = await buildPdf(cvId, profile.id);
+
+    if (!result) {
+      return NextResponse.json({ error: "CV not found" }, { status: 404 });
+    }
 
     const upload = await uploadRawAsset(
-      Buffer.from(pdf).toString("base64"),
-      `exports/${slugify(cv.name)}-${cv.id}`,
+      Buffer.from(result.pdf).toString("base64"),
+      `exports/${slugify(result.cv.name)}-${result.cv.id}`,
     );
 
     return NextResponse.json({

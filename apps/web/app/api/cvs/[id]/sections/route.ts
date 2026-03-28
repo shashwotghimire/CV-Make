@@ -24,6 +24,7 @@ export async function POST(
       cvId: cv.id,
       title: payload.title,
       order: payload.order,
+      summaryBullets: payload.summaryBullets,
     },
   });
 

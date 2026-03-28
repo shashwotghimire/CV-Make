@@ -34,8 +34,8 @@ export default async function CVPreviewPage({
   const html = renderCVHtml(payload, cv.template.templateHtml);
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-10">
-      <div className="rounded-[2rem] border border-black/10 bg-white p-6 shadow-[0_30px_120px_-70px_rgba(15,23,42,0.6)]">
+    <div className="min-h-screen bg-white px-4 py-8 md:px-8">
+      <div className="mx-auto max-w-5xl bg-white">
         <div dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>

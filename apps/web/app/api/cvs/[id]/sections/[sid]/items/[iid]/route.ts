@@ -10,6 +10,10 @@ export async function PUT(
   const { profile } = await requireProfile();
   const body = (await request.json()) as {
     order?: number;
+    customTitle?: string | null;
+    customSubtitle?: string | null;
+    customRightTitle?: string | null;
+    customRightSubtitle?: string | null;
     customBullets?: string[];
   };
 
@@ -32,6 +36,10 @@ export async function PUT(
     where: { id: iid },
     data: {
       order: body.order,
+      customTitle: body.customTitle,
+      customSubtitle: body.customSubtitle,
+      customRightTitle: body.customRightTitle,
+      customRightSubtitle: body.customRightSubtitle,
       customBullets: body.customBullets,
     },
   });

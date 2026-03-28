@@ -11,7 +11,7 @@ type CVCard = {
   hasPendingUpdates: boolean;
   template: {
     name: string;
-    thumbnailUrl: string;
+    imageUrl: string;
   };
 };
 
@@ -69,7 +69,25 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {cvs.map((cv) => (
           <article key={cv.id} className="overflow-hidden rounded-3xl border border-black/10 bg-white">
-            <Image alt={cv.name} className="h-40 w-full object-cover" height={320} src={cv.template.thumbnailUrl} unoptimized width={640} />
+            {cv.template.imageUrl ? (
+              <Image
+                alt={cv.name}
+                className="h-40 w-full object-cover object-top"
+                height={320}
+                src={cv.template.imageUrl}
+                unoptimized
+                width={640}
+              />
+            ) : (
+              <div className="flex h-40 w-full items-end bg-[linear-gradient(135deg,#fff7ed,#ffffff_55%,#f3f4f6)] p-5">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+                    {cv.template.name}
+                  </p>
+                  <p className="mt-2 text-sm text-slate-600">Template preview image missing</p>
+                </div>
+              </div>
+            )}
             <div className="space-y-4 p-5">
               <div className="flex items-start justify-between gap-4">
                 <div>
@@ -89,7 +107,7 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
                 <Link className="btn-primary" href={`/cv/${cv.id}`}>
                   Edit
                 </Link>
-                <Link className="btn-secondary" href={`/cv/${cv.id}/preview`}>
+                <Link className="btn-secondary" href={`/api/export/${cv.id}`} target="_blank">
                   Preview
                 </Link>
                 <button className="btn-secondary" disabled={pending} onClick={() => duplicateCV(cv.id)} type="button">

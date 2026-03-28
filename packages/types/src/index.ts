@@ -34,6 +34,7 @@ export const projectMetaSchema = z.object({
   issuer: z.string().optional(),
   proficiency: z.string().optional(),
   category: z.string().optional(),
+  location: z.string().optional(),
 });
 
 export const baseItemInputSchema = z.object({
@@ -75,11 +76,16 @@ export const cvInputSchema = z.object({
 export const cvSectionInputSchema = z.object({
   title: z.string().min(1),
   order: z.number().int().nonnegative().default(0),
+  summaryBullets: z.array(z.string()).default([]),
 });
 
 export const cvSectionItemInputSchema = z.object({
   itemId: z.string().min(1),
   order: z.number().int().nonnegative().default(0),
+  customTitle: z.string().optional().nullable(),
+  customSubtitle: z.string().optional().nullable(),
+  customRightTitle: z.string().optional().nullable(),
+  customRightSubtitle: z.string().optional().nullable(),
   customBullets: z.array(z.string()).default([]),
 });
 
@@ -114,6 +120,8 @@ export type RenderCVItem = {
   type: ItemType;
   title: string;
   subtitle?: string | null;
+  rightTitle?: string | null;
+  rightSubtitle?: string | null;
   description?: string | null;
   bullets: string[];
   technologies: string[];
@@ -126,6 +134,7 @@ export type RenderCVSection = {
   id: string;
   title: string;
   order: number;
+  summaryBullets: string[];
   items: RenderCVItem[];
 };
 

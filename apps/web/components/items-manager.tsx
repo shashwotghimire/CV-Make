@@ -7,7 +7,13 @@ type ItemRecord = {
   id: string;
   type: ItemType;
   title: string;
+  subtitle: string | null;
   description: string | null;
+  dateStart: string | null;
+  dateEnd: string | null;
+  url: string | null;
+  location: string | null;
+  bullets: string[];
   tags: string[];
   technologies: string[];
 };
@@ -33,6 +39,13 @@ export function ItemsManager({
   const filteredItems =
     typeFilter === "ALL" ? items : items.filter((item) => item.type === typeFilter);
 
+  function parseBullets(value: string) {
+    return value
+      .split("\n")
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+  }
+
   async function handleCreate(formData: FormData) {
     setMessage(null);
 
@@ -40,8 +53,9 @@ export function ItemsManager({
       const payload = {
         type: formData.get("type"),
         title: formData.get("title"),
+        subtitle: formData.get("subtitle") || null,
         description: formData.get("description") || null,
-        bullets: [],
+        bullets: parseBullets(String(formData.get("bullets") ?? "")),
         technologies: String(formData.get("technologies") ?? "")
           .split(",")
           .map((entry) => entry.trim())
@@ -50,7 +64,14 @@ export function ItemsManager({
           .split(",")
           .map((entry) => entry.trim())
           .filter(Boolean),
-        meta: {},
+        dateStart: formData.get("dateStart") || null,
+        dateEnd: formData.get("dateEnd") || null,
+        url: formData.get("url") || null,
+        meta: {
+          ...(formData.get("location")
+            ? { location: String(formData.get("location")) }
+            : {}),
+        },
       };
 
       const response = await fetch("/api/items", {
@@ -143,8 +164,34 @@ export function ItemsManager({
             <input className="input-base" name="title" required />
           </label>
           <label>
+            <span className="label-text">Subheading</span>
+            <input className="input-base" name="subtitle" placeholder="Software Engineer / B.S. Computer Science" />
+          </label>
+          <div className="grid gap-4 md:grid-cols-2">
+            <label>
+              <span className="label-text">Start date</span>
+              <input className="input-base" name="dateStart" type="month" />
+            </label>
+            <label>
+              <span className="label-text">End date</span>
+              <input className="input-base" name="dateEnd" type="month" />
+            </label>
+          </div>
+          <label>
+            <span className="label-text">Right-side info (location)</span>
+            <input className="input-base" name="location" placeholder="City, State" />
+          </label>
+          <label>
             <span className="label-text">Description</span>
             <textarea className="input-base min-h-28" name="description" />
+          </label>
+          <label>
+            <span className="label-text">Bullets (one per line)</span>
+            <textarea className="input-base min-h-28" name="bullets" placeholder="Built X that improved Y\nLed Z and reduced A" />
+          </label>
+          <label>
+            <span className="label-text">URL</span>
+            <input className="input-base" name="url" placeholder="https://example.com" type="url" />
           </label>
           <label>
             <span className="label-text">Technologies</span>
@@ -227,7 +274,23 @@ export function ItemsManager({
                     {item.type}
                   </p>
                   <h3 className="text-lg font-semibold text-slate-950">{item.title}</h3>
+                  {item.subtitle ? <p className="text-sm italic text-slate-700">{item.subtitle}</p> : null}
+                  {(item.dateStart || item.dateEnd || item.location) ? (
+                    <p className="text-xs uppercase tracking-[0.12em] text-slate-500">
+                      {item.dateStart || item.dateEnd
+                        ? `${item.dateStart ? new Date(item.dateStart).toLocaleDateString(undefined, { month: "short", year: "numeric" }) : ""}${item.dateStart || item.dateEnd ? " - " : ""}${item.dateEnd ? new Date(item.dateEnd).toLocaleDateString(undefined, { month: "short", year: "numeric" }) : "Present"}`
+                        : ""}
+                      {item.location ? `${item.dateStart || item.dateEnd ? " | " : ""}${item.location}` : ""}
+                    </p>
+                  ) : null}
                   <p className="text-sm text-slate-600">{item.description}</p>
+                  {item.bullets.length ? (
+                    <ul className="list-disc space-y-1 pl-5 text-sm text-slate-700">
+                      {item.bullets.slice(0, 2).map((bullet, index) => (
+                        <li key={`${item.id}-bullet-${index}`}>{bullet}</li>
+                      ))}
+                    </ul>
+                  ) : null}
                   <div className="flex flex-wrap gap-2">
                     {item.tags.map((tag) => (
                       <span key={tag} className="rounded-full bg-slate-100 px-3 py-1 text-xs">

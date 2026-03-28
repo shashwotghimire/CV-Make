@@ -30,7 +30,16 @@ export default async function ItemsPage() {
           id: item.id,
           type: item.type,
           title: item.title,
+          subtitle: item.subtitle,
           description: item.description,
+          dateStart: item.dateStart?.toISOString() ?? null,
+          dateEnd: item.dateEnd?.toISOString() ?? null,
+          url: item.url,
+          location:
+            item.meta && typeof item.meta === "object" && typeof (item.meta as Record<string, unknown>).location === "string"
+              ? ((item.meta as Record<string, unknown>).location as string)
+              : null,
+          bullets: item.bullets,
           tags: item.tags,
           technologies: item.technologies,
         }))}

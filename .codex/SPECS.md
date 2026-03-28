@@ -32,6 +32,36 @@ P6 Propagation
 - 026 | P1 Foundation | created local `.env`, ran `db:push`, ran `db:seed` | app DB initialized
 - 027 | P1 Foundation | started `pnpm dev` | app live on localhost:3000
 - 028 | P7 Polish and Hardening | `.env.example` contained real secrets, replaced with placeholders | secret remediation started
+- 029 | P1 Foundation | restarted app using local env export | run request handled
+- 030 | P7 Polish and Hardening | turbo env pass-through missed Clerk/DB vars, added `globalEnv` | runtime fix
+- 031 | P7 Polish and Hardening | fixed Clerk first-login profile race by replacing `upsert` with safe create/fetch | runtime fix
+- 032 | P5 Export | moved `/cv/[id]/preview` out of app shell route group | preview now template-only
+- 033 | P4 CV Builder | dashboard CV cards now use template preview image, not generic thumb | CV cards closer to real resume
+- 034 | P5 Export | preview now points to `/api/export/[cvId]` PDF stream, not HTML page | preview opens PDF
+- 035 | P4 CV Builder | added section-level bullet storage + rich bullet editor with formatting controls | section/item bullets upgraded
+- 036 | P5 Export | updated starter template toward Overleaf ATS layout and reseeded template | template closer to target
+- 037 | P4 CV Builder | replaced custom bullet editor with `react-quill-new` rich text editor | popular editor, per-bullet rich formatting live
+- 038 | P4 CV Builder | extended CV item rows with heading/right-side/subheading/additional-info overrides | builder now supports Overleaf-style hierarchy
+- 039 | P5 Export | updated render payload + template to print left/right rows before bullets | PDF closer to Overleaf structure
+- 040 | P1 Foundation | pushed Prisma schema changes to Neon + regenerated client | runtime/client shape synced
+- 041 | P4 CV Builder | fixed Quill format config after live browser warning | rich editor stable on CV page
+- 042 | P7 Polish and Hardening | added `.codex/CONTEXT.md` handoff doc for next agent/thread | project context preserved
+- 043 | P5 Export | refined seeded Handlebars resume template typography/spacing/hierarchy to match provided sample | PDF output now closer to target layout
+- 044 | P5 Export | discovered admin starter template source diverged from DB seed and kept injecting old layout on manual edits | synced template source of truth
+- 045 | P5 Export | rebuilt template CSS with explicit section/entry hierarchy and denser Overleaf-like spacing | layout fidelity improved for preview/export
+- 046 | P4 CV Builder | removed full-page reload flow and switched builder to local section/item state updates after API writes | builder interactions now preserve UI state
+- 047 | P5 Export | forced preview iframe cache-busting reload on successful builder writes | PDF preview now refreshes instantly after add/edit/remove/save
+- 048 | P4 CV Builder | fixed hydration mismatch by rendering initial iframe src identical to server and applying cache-bust token only after client actions | no SSR/client attribute drift on first load
+- 049 | P5 Export | rebuilt resume template with LaTeX-inspired proportions (Lato stack, small-caps section titles, tighter vertical rhythm) based on Overleaf source | closer visual parity with target template
+- 050 | P4 CV Builder | expanded item creation form to capture hierarchy fields (subtitle, date range, location, bullets, URL) so PDF row structure can be populated from source data | hierarchy inputs now available at item level
+- 051 | P4 CV Builder | added per-section "Add entry" form with full Overleaf hierarchy fields (heading/right/subheading/additional info/bullets/tech) and wired create+link flow | users can create structured entries directly inside section without leaving builder
+- 052 | P4 CV Builder | simplified per-section entry form by promoting four hierarchy fields + bullets and moving type/tech into collapsible optional area | builder form less cluttered and easier to scan
+- 053 | P5 Export | adjusted template indentation hierarchy: section title remains flush, heading/subheading rows get first-level indent, bullets get deeper indent | visual nesting now matches requested structure
+- 054 | P5 Export | increased hierarchy indent to 6ch (head/subhead) and 12ch (bullets), plus added vertical breathing space between entries and bullet blocks | spacing now matches requested 6-space indent and extra vertical gap
+- 055 | P5 Export | fixed overflow/wrapping by switching entry rows to grid with constrained right columns, enabling word-wrap, and preserving indent on wrapped lines | long content now breaks to new lines without margin collapse
+- 056 | P5 Export | corrected section heading typography to match Overleaf look (normal case, reduced size, cleaner rule tone) | section names now render closer to reference
+- 057 | P4 CV Builder | cleaned section form UX by flattening structure, surfacing only essential quick-add fields, and moving secondary controls into collapsible panels | reduced visual clutter and nesting depth
+- 058 | P4 CV Builder | made builder forms collapsible (add section, quick add entry, section bullets, item edit) to reduce persistent UI noise | cleaner and more focus-oriented editing flow
 
 ## Completed phases
 - P1 Foundation

@@ -27,12 +27,20 @@ export async function POST(
     where: { sectionId_itemId: { sectionId: sid, itemId: payload.itemId } },
     update: {
       order: payload.order,
+      customTitle: payload.customTitle,
+      customSubtitle: payload.customSubtitle,
+      customRightTitle: payload.customRightTitle,
+      customRightSubtitle: payload.customRightSubtitle,
       customBullets: payload.customBullets,
     },
     create: {
       sectionId: sid,
       itemId: payload.itemId,
       order: payload.order,
+      customTitle: payload.customTitle,
+      customSubtitle: payload.customSubtitle,
+      customRightTitle: payload.customRightTitle,
+      customRightSubtitle: payload.customRightSubtitle,
       customBullets: payload.customBullets,
     },
   });

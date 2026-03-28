@@ -1,5 +1,5 @@
 import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
-import { prisma, Role } from "@cvmake/db";
+import { Prisma, prisma, Role } from "@cvmake/db";
 import { redirect } from "next/navigation";
 
 export async function requireClerkUser() {
@@ -20,23 +20,45 @@ export async function requireClerkUser() {
 
 export async function getOrCreateProfile() {
   const user = await requireClerkUser();
-
-  return prisma.profile.upsert({
-    where: { clerkUserId: user.id },
-    update: {},
-    create: { clerkUserId: user.id },
-  });
+  return ensureProfile(user.id);
 }
 
 export async function requireProfile() {
   const user = await requireClerkUser();
-  const profile = await prisma.profile.upsert({
-    where: { clerkUserId: user.id },
-    update: {},
-    create: { clerkUserId: user.id },
-  });
+  const profile = await ensureProfile(user.id);
 
   return { user, profile };
+}
+
+async function ensureProfile(clerkUserId: string) {
+  const existing = await prisma.profile.findUnique({
+    where: { clerkUserId },
+  });
+
+  if (existing) {
+    return existing;
+  }
+
+  try {
+    return await prisma.profile.create({
+      data: { clerkUserId },
+    });
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      const profile = await prisma.profile.findUnique({
+        where: { clerkUserId },
+      });
+
+      if (profile) {
+        return profile;
+      }
+    }
+
+    throw error;
+  }
 }
 
 export async function requireAdminProfile() {

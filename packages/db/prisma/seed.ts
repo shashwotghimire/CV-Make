@@ -2,6 +2,142 @@ import { PrismaClient, Role } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const overleafInspiredTemplate = String.raw`<main style="font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;width:7.5in;max-width:100%;margin:0 auto;padding:0 2px;color:#111;background:#fff;font-size:11pt;line-height:1.22;overflow-wrap:anywhere;">
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    p, ul, li { margin: 0; padding: 0; }
+    a { color: #111; text-decoration: underline; text-underline-offset: 1px; }
+
+    .resume-header { text-align: center; margin: 0 0 10px; }
+    .resume-name { margin: 0; font-size: 30pt; line-height: 1; font-weight: 700; }
+    .resume-contact {
+      margin-top: 4px;
+      font-size: 12pt;
+      line-height: 1.15;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      column-gap: 0;
+      row-gap: 1px;
+    }
+    .resume-contact span { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+
+    .resume-section { margin-top: 8px; }
+    .resume-section-title {
+      margin: 0;
+      padding: 0 0 1px;
+      font-size: 14.2pt;
+      line-height: 1.1;
+      font-weight: 500;
+      letter-spacing: 0;
+      font-variant: normal;
+      text-transform: none;
+      border-bottom: 1px solid #707070;
+    }
+
+    .summary-list {
+      margin: 2px 0 4px 17px;
+      font-size: 11pt;
+      line-height: 1.2;
+    }
+    .summary-list li { margin: 0 0 1px; }
+
+    .resume-entry { margin-top: 4px; }
+    .entry-primary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      column-gap: 14px;
+      margin-top: 1px;
+      padding-left: 6ch;
+    }
+    .entry-title { font-size: 12.4pt; font-weight: 700; line-height: 1.12; min-width: 0; overflow-wrap: anywhere; }
+    .entry-right-title { font-size: 12.2pt; font-weight: 500; line-height: 1.12; max-width: 24ch; text-align: right; overflow-wrap: anywhere; }
+
+    .entry-secondary {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      column-gap: 14px;
+      margin-top: 1px;
+      padding-left: 6ch;
+    }
+    .entry-subtitle { font-size: 11.5pt; font-style: italic; line-height: 1.1; min-width: 0; overflow-wrap: anywhere; }
+    .entry-right-subtitle { font-size: 11.5pt; font-style: italic; line-height: 1.1; max-width: 24ch; text-align: right; overflow-wrap: anywhere; }
+
+    .entry-description { margin-top: 1px; padding-left: 6ch; font-size: 11pt; line-height: 1.16; overflow-wrap: anywhere; }
+    .entry-url { margin-top: 1px; padding-left: 6ch; font-size: 10.8pt; line-height: 1.14; overflow-wrap: anywhere; }
+
+    .entry-bullets {
+      margin: 3px 0 5px 12ch;
+      font-size: 11pt;
+      line-height: 1.18;
+    }
+    .entry-bullets li { margin: 0 0 1px; overflow-wrap: anywhere; }
+    .entry-bullets li p { margin: 0; }
+
+    .entry-tech { font-style: italic; font-weight: 400; }
+  </style>
+
+  <header class="resume-header">
+    <h1 class="resume-name">{{profile.name}}</h1>
+    <p class="resume-contact">
+      {{#if profile.phone}}<span>&#9742; {{profile.phone}}</span>{{/if}}
+      <span>{{#if profile.phone}} &nbsp;&nbsp; &#124; &nbsp;&nbsp; {{/if}}&#9993; {{profile.email}}</span>
+      {{#if profile.linkedin}}<span>&nbsp;&nbsp; &#124; &nbsp;&nbsp;<a href="{{profile.linkedin}}">{{profile.linkedin}}</a></span>{{/if}}
+      {{#if profile.github}}<span>&nbsp;&nbsp; &#124; &nbsp;&nbsp;<a href="{{profile.github}}">{{profile.github}}</a></span>{{/if}}
+      {{#if profile.website}}<span>&nbsp;&nbsp; &#124; &nbsp;&nbsp;<a href="{{profile.website}}">{{profile.website}}</a></span>{{/if}}
+    </p>
+  </header>
+
+  {{#each sections}}
+    <section class="resume-section">
+      <h2 class="resume-section-title">{{title}}</h2>
+
+      {{#if summaryBullets.length}}
+        <ul class="summary-list">
+          {{#each summaryBullets}}
+            <li>{{{this}}}</li>
+          {{/each}}
+        </ul>
+      {{/if}}
+
+      {{#each items}}
+        <article class="resume-entry">
+          <div class="entry-primary">
+            <div class="entry-title">
+              {{title}}{{#if technologies.length}} <span class="entry-tech">| {{#each technologies}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</span>{{/if}}
+            </div>
+            {{#if rightTitle}}<div class="entry-right-title">{{rightTitle}}</div>{{/if}}
+          </div>
+
+          <div class="entry-secondary">
+            {{#if subtitle}}<div class="entry-subtitle">{{subtitle}}</div>{{else}}<div class="entry-subtitle"></div>{{/if}}
+            {{#if rightSubtitle}}<div class="entry-right-subtitle">{{rightSubtitle}}</div>{{/if}}
+          </div>
+
+          {{#if description}}
+            <p class="entry-description">{{description}}</p>
+          {{/if}}
+
+          {{#if url}}
+            <p class="entry-url"><a href="{{url}}">{{url}}</a></p>
+          {{/if}}
+
+          {{#if bullets.length}}
+            <ul class="entry-bullets">
+              {{#each bullets}}
+                <li>{{{this}}}</li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        </article>
+      {{/each}}
+    </section>
+  {{/each}}
+</main>`;
+
 async function main() {
   const adminClerkId = process.env.SEED_ADMIN_CLERK_USER_ID;
 
@@ -16,18 +152,18 @@ async function main() {
   await prisma.template.upsert({
     where: { id: "starter-template" },
     update: {
-      name: "Starter Modern",
+      name: "SWE Resume Template",
       thumbnailUrl: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
       previewUrl: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+      templateHtml: overleafInspiredTemplate,
       isActive: true,
     },
     create: {
       id: "starter-template",
-      name: "Starter Modern",
+      name: "SWE Resume Template",
       thumbnailUrl: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
       previewUrl: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
-      templateHtml:
-        "<main><h1>{{profile.name}}</h1><p>{{profile.email}}</p>{{#each sections}}<section><h2>{{title}}</h2>{{#each items}}<article><h3>{{title}}</h3>{{#each bullets}}<p>{{this}}</p>{{/each}}</article>{{/each}}</section>{{/each}}</main>",
+      templateHtml: overleafInspiredTemplate,
       isActive: true,
     },
   });

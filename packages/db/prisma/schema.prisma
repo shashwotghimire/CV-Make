@@ -77,6 +77,7 @@ model CVSection {
   cv        CV              @relation(fields: [cvId], references: [id], onDelete: Cascade)
   title     String
   order     Int
+  summaryBullets String[]
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
   items     CVSectionItem[]
@@ -89,6 +90,10 @@ model CVSectionItem {
   itemId        String
   item          Item      @relation(fields: [itemId], references: [id], onDelete: Cascade)
   order         Int
+  customTitle   String?
+  customSubtitle String?
+  customRightTitle String?
+  customRightSubtitle String?
   customBullets String[]
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
