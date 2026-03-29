@@ -70,6 +70,9 @@ const starterTemplate = String.raw`<!DOCTYPE html>
       line-height: 1.3;
     }
     .summary-list li { margin-bottom: 1px; padding-left: 0; overflow-wrap: break-word; }
+    .summary-list li p { margin: 0; }
+    .summary-list li ul,
+    .summary-list li ol { margin: 0.15em 0 0.15em 1.1em; }
 
     .resume-entry { margin: 0 0 5px 0; }
     .entry-content { width: 100%; padding-left: 8px; }

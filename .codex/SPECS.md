@@ -78,6 +78,7 @@ P6 Propagation
 - 072 | P7 Polish and Hardening | completed phase-2 polish: enforced global button cursor consistency (+disabled state), reduced form density by moving item metadata into progressive disclosure, and adjusted builder preview stickiness thresholds for better multi-section visibility on common desktop widths | stronger cross-surface consistency and reduced form clutter
 - 073 | P7 Polish and Hardening | redesigned landing page IA/visual hierarchy (clear value proposition, workflow snapshot, step-by-step section, stronger CTA framing, improved readability) while preserving all routes/actions | homepage UX now significantly clearer and more conversion-oriented
 - 074 | P5 Export | restored Handlebars `eq` helper registration in renderer to support skill-branch logic in template HTML | fixed production preview/export failure (`Missing helper: "eq"`)
+- 075 | P5 Export | normalized section summary bullet rich-text rendering by adding list/paragraph reset rules to `.summary-list` (matching entry bullet behavior) in both seeded and starter templates | section bullets now preserve formatting consistency with quick-add bullets
 
 ## Completed phases
 - P1 Foundation
