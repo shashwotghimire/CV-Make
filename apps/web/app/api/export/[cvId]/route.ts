@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@cvmake/db";
 import chromium from "@sparticuz/chromium";
@@ -11,12 +13,33 @@ import { slugify } from "@/lib/utils";
 const localChromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 export const runtime = "nodejs";
 
+function resolveChromiumBinDir() {
+  const candidates = [
+    path.join(process.cwd(), "node_modules", "@sparticuz", "chromium", "bin"),
+    "/var/task/node_modules/@sparticuz/chromium/bin",
+    "/var/task/node_modules/.pnpm/@sparticuz+chromium@143.0.4/node_modules/@sparticuz/chromium/bin",
+  ];
+
+  for (const candidate of candidates) {
+    if (existsSync(candidate)) {
+      return candidate;
+    }
+  }
+
+  return null;
+}
+
 async function launchBrowser() {
   if (process.env.VERCEL) {
-    const executablePath = process.env.CHROMIUM_EXECUTABLE_PATH || (await chromium.executablePath());
+    const binDir = resolveChromiumBinDir();
+    const executablePath =
+      process.env.CHROMIUM_EXECUTABLE_PATH ||
+      (binDir ? await chromium.executablePath(binDir) : await chromium.executablePath());
 
     if (!executablePath) {
-      throw new Error("Chromium executable path not resolved on Vercel");
+      throw new Error(
+        `Chromium executable path not resolved on Vercel (binDir=${binDir ?? "missing"}, cwd=${process.cwd()})`,
+      );
     }
 
     return puppeteerCore.launch({

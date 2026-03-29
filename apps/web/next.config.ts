@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     "puppeteer-core",
   ],
   outputFileTracingIncludes: {
-    "/api/export/[cvId]": [
+    "/*": [
       "./node_modules/@sparticuz/chromium/bin/**",
       "./node_modules/.pnpm/@sparticuz+chromium@*/node_modules/@sparticuz/chromium/bin/**",
     ],
