@@ -19,13 +19,14 @@ const starterTemplate = String.raw`<!DOCTYPE html>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font.css" />
 </head>
 <body>
-<main style="font-family:'Computer Modern',serif;max-width:750px;margin:0 auto;padding:24px 48px;color:#000000;background:#ffffff;font-size:14px;line-height:1.25;letter-spacing:0;">
+<main class="resume-root" style="font-family:'Computer Modern',serif;max-width:750px;margin:0 auto;padding:24px 48px;color:#000000;background:#ffffff;font-size:14px;line-height:1.25;letter-spacing:0;">
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; }
+    .resume-root, .resume-root * { color: #000 !important; }
     p { margin: 0; }
     ul, li { margin: 0; }
-    a { color: #000000; text-decoration: underline; }
+    a { color: inherit; text-decoration: none; }
 
     .resume-header { text-align: center; margin: 0 0 8px; }
     .resume-name { margin: 0; font-size: 42px; line-height: 1; font-weight: 700; }
@@ -48,6 +49,7 @@ const starterTemplate = String.raw`<!DOCTYPE html>
       font-size: 13px;
       line-height: 1.15;
       font-weight: 700;
+      color: #000;
       letter-spacing: 0;
       font-variant: normal;
       text-transform: none;
@@ -70,26 +72,29 @@ const starterTemplate = String.raw`<!DOCTYPE html>
     .summary-list li { margin-bottom: 1px; padding-left: 0; overflow-wrap: break-word; }
 
     .resume-entry { margin: 0 0 5px 0; }
-    .entry-content { width: 100%; margin-left: 1.5em; }
+    .entry-content { width: 100%; padding-left: 8px; }
     .entry-primary {
-      width: 100%;
       display: flex;
+      flex-direction: row;
       justify-content: space-between;
-      gap: 8px;
       align-items: baseline;
+      width: 100%;
+      min-width: 0;
+      gap: 8px;
       margin: 0;
     }
     .entry-title-wrap {
+      flex: 1;
       min-width: 0;
-      flex: 1 1 auto;
     }
     .entry-title { font-size: 13px; font-weight: 700; line-height: 1.25; overflow-wrap: break-word; }
     .entry-right-title {
       font-size: 13px;
       font-weight: 400;
       line-height: 1.25;
-      white-space: nowrap;
       flex-shrink: 0;
+      white-space: nowrap;
+      padding-left: 12px;
       text-align: right;
     }
 
@@ -109,9 +114,7 @@ const starterTemplate = String.raw`<!DOCTYPE html>
     .entry-url { margin-top: 0; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
 
     .entry-bullets {
-      margin-top: 2px;
-      margin-bottom: 0;
-      margin-left: 0;
+      margin: 2px 0 0 0;
       padding-left: 1.2em;
       list-style-type: disc;
       list-style-position: outside;
