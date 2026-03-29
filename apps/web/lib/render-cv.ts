@@ -2,6 +2,10 @@ import Handlebars from "handlebars";
 import { prisma } from "@cvmake/db";
 import type { RenderCVPayload } from "@cvmake/types";
 
+if (!Handlebars.helpers.eq) {
+  Handlebars.registerHelper("eq", (left: unknown, right: unknown) => left === right);
+}
+
 function formatMonthYear(value?: Date | null) {
   if (!value) return "";
   return new Intl.DateTimeFormat("en-US", {
