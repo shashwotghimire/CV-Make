@@ -72,7 +72,6 @@ P6 Propagation
 - 066 | P5 Export | replaced approximate typography with exact numeric styling spec (Computer Modern import/stack, 14px base, 13px section+rows, precise margins, hr rule, bullet indent behavior) | template now follows explicit Overleaf-like measurements
 - 067 | P5 Export | fixed row/bullet rendering bugs per explicit spec: row-1 flex alignment with constrained right span, row-2 full-line italics, per-entry content wrapper for inherited bullet boundary, and head-level Computer Modern stylesheet link | PDF hierarchy alignment now matches requested behavior
 - 068 | P5 Export | applied strict render bugfixes: entry wrapper 8px indent, bullet list margin/padding normalization, global pure-black override, link neutralization, explicit section-title black weight, and row-1 flex hardening props | remaining alignment/color regressions resolved
-- 069 | P5 Export | migrated resume template rendering to Tailwind utility classes only (removed inline layout styling), replaced native list bullets with manual bullet rows, enforced black text/link classes, added skill-inline layout branch, and wired Handlebars `eq` helper for section/item variant rendering | CV output now follows utility-only rendering contract
 
 ## Completed phases
 - P1 Foundation
