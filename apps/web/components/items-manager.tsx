@@ -189,18 +189,23 @@ export function ItemsManager({
             <span className="label-text">Bullets (one per line)</span>
             <textarea className="input-base min-h-28" name="bullets" placeholder="Built X that improved Y\nLed Z and reduced A" />
           </label>
-          <label className="form-field">
-            <span className="label-text">URL</span>
-            <input className="input-base" name="url" placeholder="https://example.com" type="url" />
-          </label>
-          <label className="form-field">
-            <span className="label-text">Technologies</span>
-            <input className="input-base" name="technologies" placeholder="Next.js, Prisma, Clerk" />
-          </label>
-          <label className="form-field">
-            <span className="label-text">Tags</span>
-            <input className="input-base" name="tags" placeholder="frontend, featured" />
-          </label>
+          <details className="rounded-xl border border-black/10 bg-slate-50/60 px-4 py-3">
+            <summary className="cursor-pointer text-sm font-medium text-slate-700">Advanced metadata</summary>
+            <div className="form-grid mt-3">
+              <label className="form-field md:col-span-2">
+                <span className="label-text">URL</span>
+                <input className="input-base" name="url" placeholder="https://example.com" type="url" />
+              </label>
+              <label className="form-field">
+                <span className="label-text">Technologies</span>
+                <input className="input-base" name="technologies" placeholder="Next.js, Prisma, Clerk" />
+              </label>
+              <label className="form-field">
+                <span className="label-text">Tags</span>
+                <input className="input-base" name="tags" placeholder="frontend, featured" />
+              </label>
+            </div>
+          </details>
           <button className="btn-primary w-full" disabled={pending} type="submit">
             {pending ? "Saving..." : "Create item"}
           </button>

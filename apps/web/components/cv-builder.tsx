@@ -515,7 +515,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[300px,1fr,minmax(420px,0.95fr)]">
+    <div className="grid gap-6 2xl:grid-cols-[300px,1fr,minmax(420px,0.95fr)]">
       <aside className="panel-strong p-5">
         <div className="flex items-center justify-between gap-4">
           <div>
@@ -562,7 +562,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         </div>
       </aside>
 
-      <section className="space-y-4 xl:min-w-0">
+      <section className="space-y-4 min-[1400px]:min-w-0">
         <details className="panel-strong p-5" open>
           <summary className="cursor-pointer text-sm font-medium text-slate-800">Add section</summary>
           <div className="mt-3 flex gap-3">
@@ -822,7 +822,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         })}
       </section>
 
-      <aside className="panel-strong sticky top-5 h-[calc(100vh-7rem)] p-4">
+      <aside className="panel-strong h-[72vh] p-4 min-[1400px]:sticky min-[1400px]:top-5 min-[1400px]:h-[calc(100vh-7rem)]">
         <div className="space-y-2">
           <p className="text-sm font-medium text-slate-950">Preview PDF</p>
           <p className="text-sm text-slate-600">Preview uses the exported PDF stream, not an HTML approximation.</p>

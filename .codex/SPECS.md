@@ -75,6 +75,7 @@ P6 Propagation
 - 069 | P7 Polish and Hardening | added OpenCode skill definition at `.opencode/skills/frontend-design/SKILL.md` with requested frontend design guidance and wording updates | project-local frontend design skill is now discoverable
 - 070 | P7 Polish and Hardening | installed Anthropic `frontend-design` skill pack (`npx skills add ... --skill frontend-design`) and applied app-wide visual overhaul (new typography, color system, panel tokens, spacing/motion/button/input refinements) across shell, landing, dashboard, builder, forms, and admin surfaces without changing workflow logic | UI modernized with improved hierarchy and consistency
 - 071 | P7 Polish and Hardening | executed major UI patch per feedback: replaced sidebar with responsive navbar, rebuilt landing hero/information architecture, normalized button pointer affordances, flattened form structures via shared field/grid utilities, and made CV preview panel sticky/full-height for long-section editing | consistency and core editing UX significantly improved without functional behavior changes
+- 072 | P7 Polish and Hardening | completed phase-2 polish: enforced global button cursor consistency (+disabled state), reduced form density by moving item metadata into progressive disclosure, and adjusted builder preview stickiness thresholds for better multi-section visibility on common desktop widths | stronger cross-surface consistency and reduced form clutter
 
 ## Completed phases
 - P1 Foundation
