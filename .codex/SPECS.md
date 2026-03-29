@@ -72,6 +72,8 @@ P6 Propagation
 - 066 | P5 Export | replaced approximate typography with exact numeric styling spec (Computer Modern import/stack, 14px base, 13px section+rows, precise margins, hr rule, bullet indent behavior) | template now follows explicit Overleaf-like measurements
 - 067 | P5 Export | fixed row/bullet rendering bugs per explicit spec: row-1 flex alignment with constrained right span, row-2 full-line italics, per-entry content wrapper for inherited bullet boundary, and head-level Computer Modern stylesheet link | PDF hierarchy alignment now matches requested behavior
 - 068 | P5 Export | applied strict render bugfixes: entry wrapper 8px indent, bullet list margin/padding normalization, global pure-black override, link neutralization, explicit section-title black weight, and row-1 flex hardening props | remaining alignment/color regressions resolved
+- 069 | P7 Polish and Hardening | added OpenCode skill definition at `.opencode/skills/frontend-design/SKILL.md` with requested frontend design guidance and wording updates | project-local frontend design skill is now discoverable
+- 070 | P7 Polish and Hardening | installed Anthropic `frontend-design` skill pack (`npx skills add ... --skill frontend-design`) and applied app-wide visual overhaul (new typography, color system, panel tokens, spacing/motion/button/input refinements) across shell, landing, dashboard, builder, forms, and admin surfaces without changing workflow logic | UI modernized with improved hierarchy and consistency
 
 ## Completed phases
 - P1 Foundation

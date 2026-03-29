@@ -51,7 +51,7 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
 
   if (!cvs.length) {
     return (
-      <div className="rounded-3xl border border-dashed border-black/20 bg-white/70 p-8">
+      <div className="panel rounded-3xl border-dashed border-black/20 p-8">
         <h2 className="text-xl font-semibold text-slate-950">No CVs yet</h2>
         <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600">
           Start with a template, then pull sections and items from your master profile.
@@ -65,10 +65,10 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
 
   return (
     <div className="space-y-4">
-      {message ? <p className="text-sm text-slate-600">{message}</p> : null}
+      {message ? <p className="rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-sm text-slate-600">{message}</p> : null}
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         {cvs.map((cv) => (
-          <article key={cv.id} className="overflow-hidden rounded-3xl border border-black/10 bg-white">
+          <article key={cv.id} className="panel-strong overflow-hidden rounded-3xl">
             {cv.template.imageUrl ? (
               <Image
                 alt={cv.name}
@@ -79,9 +79,9 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
                 width={640}
               />
             ) : (
-              <div className="flex h-40 w-full items-end bg-[linear-gradient(135deg,#fff7ed,#ffffff_55%,#f3f4f6)] p-5">
+              <div className="flex h-40 w-full items-end bg-[linear-gradient(140deg,#ecfeff,#ffffff_55%,#f3f4f6)] p-5">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
                     {cv.template.name}
                   </p>
                   <p className="mt-2 text-sm text-slate-600">Template preview image missing</p>
@@ -95,7 +95,7 @@ export function CVDashboard({ cvs }: { cvs: CVCard[] }) {
                   <p className="text-sm text-slate-600">{cv.template.name}</p>
                 </div>
                 {cv.hasPendingUpdates ? (
-                  <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-900">
+                  <span className="rounded-full bg-teal-100 px-3 py-1 text-xs font-medium text-teal-900">
                     Updated pool
                   </span>
                 ) : null}

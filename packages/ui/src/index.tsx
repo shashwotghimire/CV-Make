@@ -20,10 +20,10 @@ export function PageShell({
     <section className="space-y-6">
       <header className="flex flex-col gap-4 border-b border-black/10 pb-4 md:flex-row md:items-end md:justify-between">
         <div className="space-y-2">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+          <p className="eyebrow">
             CVMake
           </p>
-          <h1 className="text-3xl font-semibold tracking-tight text-slate-950">
+          <h1 className="text-[2rem] font-semibold tracking-tight text-slate-950 md:text-[2.2rem]">
             {title}
           </h1>
           {description ? (
@@ -46,7 +46,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-3xl border border-black/10 bg-white p-5 shadow-[0_20px_60px_-40px_rgba(15,23,42,0.4)]",
+        "panel-strong p-5",
         className,
       )}
       {...props}
@@ -72,7 +72,7 @@ export function EmptyState({
   action?: ReactNode;
 }) {
   return (
-    <Card className="flex min-h-56 flex-col items-start justify-center gap-4 bg-[linear-gradient(135deg,#fff7ed,#ffffff)]">
+    <Card className="flex min-h-56 flex-col items-start justify-center gap-4 bg-[linear-gradient(135deg,#ecfeff,#ffffff)]">
       <h2 className="text-2xl font-semibold text-slate-950">{title}</h2>
       <p className="max-w-xl text-sm leading-6 text-slate-600">{body}</p>
       {action}

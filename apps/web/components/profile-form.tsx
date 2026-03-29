@@ -43,7 +43,7 @@ export function ProfileForm({ defaultValues, onboarding = false }: ProfileFormPr
   }
 
   return (
-    <form action={handleSubmit} className="grid gap-4 md:grid-cols-2">
+    <form action={handleSubmit} className="panel-strong grid gap-4 p-5 md:grid-cols-2">
       <label>
         <span className="label-text">Phone</span>
         <input className="input-base" name="phone" defaultValue={defaultValues.phone ?? ""} />

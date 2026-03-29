@@ -243,7 +243,7 @@ export function TemplateManager({ templates }: { templates: TemplateRecord[] }) 
 
   return (
     <div className="grid gap-6 xl:grid-cols-[400px,1fr]">
-      <form action={handleCreate} className="rounded-3xl border border-black/10 bg-white p-5">
+      <form action={handleCreate} className="panel-strong p-5">
         <h2 className="text-lg font-semibold text-slate-950">Upload template</h2>
         <div className="mt-4 space-y-4">
           <label>
@@ -271,7 +271,7 @@ export function TemplateManager({ templates }: { templates: TemplateRecord[] }) 
 
       <div className="grid gap-4 md:grid-cols-2">
         {templates.map((template) => (
-          <article key={template.id} className="overflow-hidden rounded-3xl border border-black/10 bg-white">
+          <article key={template.id} className="panel-strong overflow-hidden">
             <Image alt={template.name} className="h-44 w-full object-cover" height={352} src={template.previewUrl} unoptimized width={640} />
             <div className="space-y-3 p-5">
               <div className="flex items-center justify-between gap-3">

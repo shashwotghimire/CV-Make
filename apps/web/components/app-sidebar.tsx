@@ -11,25 +11,30 @@ const navItems = [
 
 export function AppSidebar() {
   return (
-    <aside className="hidden w-64 shrink-0 rounded-[2rem] border border-black/10 bg-white/80 p-5 backdrop-blur md:block">
+    <aside className="panel hidden w-72 shrink-0 p-5 md:block">
       <div className="mb-8 space-y-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+        <p className="eyebrow">
           CVMake
         </p>
-        <h2 className="text-2xl font-semibold tracking-tight text-slate-950">
+        <h2 className="text-[1.65rem] font-semibold tracking-tight text-slate-950">
           Career source of truth.
         </h2>
+        <p className="text-sm leading-6 text-slate-600">
+          Precision workflows for profile-first resume building.
+        </p>
       </div>
-      <nav className="space-y-2">
+      <nav className="space-y-1.5">
         {navItems.map((item) => {
           const Icon = item.icon;
           return (
             <Link
               key={item.href}
               href={item.href}
-              className="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-amber-50 hover:text-slate-950"
+              className="group flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-700 transition hover:border-teal-100 hover:bg-teal-50/70 hover:text-slate-950"
             >
-              <Icon className="size-4" />
+              <span className="grid size-8 place-items-center rounded-lg bg-white/90 text-slate-500 transition group-hover:bg-white group-hover:text-teal-700">
+                <Icon className="size-4" />
+              </span>
               {item.label}
             </Link>
           );

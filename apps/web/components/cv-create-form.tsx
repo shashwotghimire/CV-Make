@@ -41,7 +41,7 @@ export function CVCreateForm({ templates }: { templates: TemplateOption[] }) {
 
   return (
     <form action={handleSubmit} className="space-y-6">
-      <label className="block rounded-3xl border border-black/10 bg-white p-5">
+      <label className="panel-strong block p-5">
         <span className="label-text">CV name</span>
         <input className="input-base" name="name" placeholder="Backend roles - 2026" required />
       </label>
@@ -52,8 +52,8 @@ export function CVCreateForm({ templates }: { templates: TemplateOption[] }) {
         {templates.map((template) => (
           <button
             key={template.id}
-            className={`overflow-hidden rounded-3xl border bg-white text-left transition ${
-              selected === template.id ? "border-amber-500 ring-4 ring-amber-100" : "border-black/10"
+            className={`panel-strong overflow-hidden text-left transition ${
+              selected === template.id ? "border-teal-500 ring-4 ring-teal-100" : "border-black/10"
             }`}
             onClick={() => setSelected(template.id)}
             type="button"

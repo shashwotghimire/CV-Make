@@ -516,7 +516,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[320px,1fr,360px]">
-      <aside className="rounded-3xl border border-black/10 bg-white p-5">
+      <aside className="panel-strong p-5">
         <div className="flex items-center justify-between gap-4">
           <div>
             <p className="text-sm font-medium text-slate-950">Master profile pool</p>
@@ -534,7 +534,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         <div className="mt-4 space-y-3">
           {filteredPool.map((item) => (
             <div key={item.id} className="rounded-2xl border border-black/10 bg-slate-50 p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">{item.type}</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">{item.type}</p>
               <h3 className="mt-2 font-semibold text-slate-950">{item.title}</h3>
               {item.subtitle ? <p className="mt-1 text-sm italic text-slate-600">{item.subtitle}</p> : null}
               <div className="mt-3 flex flex-wrap gap-2">
@@ -563,7 +563,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
       </aside>
 
       <section className="space-y-4">
-        <details className="rounded-3xl border border-black/10 bg-white p-5" open>
+        <details className="panel-strong p-5" open>
           <summary className="cursor-pointer text-sm font-medium text-slate-800">Add section</summary>
           <div className="mt-3 flex gap-3">
             <input
@@ -583,7 +583,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
           const sectionEntryDraft = getSectionEntryDraft(section);
 
           return (
-            <article key={section.id} className="rounded-3xl border border-black/10 bg-white p-5">
+            <article key={section.id} className="panel-strong p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">
@@ -591,7 +591,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                   </p>
                   <h2 className="text-xl font-semibold text-slate-950">{section.title}</h2>
                 </div>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs text-amber-900">
+                <span className="rounded-full bg-teal-100 px-3 py-1 text-xs text-teal-900">
                   {section.items.length} items
                 </span>
               </div>
@@ -745,7 +745,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                     <div key={entry.id} className="rounded-2xl border border-black/10 bg-slate-50 p-4">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-amber-700">
+                          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-teal-700">
                             {entry.item.type}
                           </p>
                           <h3 className="mt-1 font-semibold text-slate-950">{draft.customTitle || entry.item.title}</h3>
@@ -822,7 +822,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         })}
       </section>
 
-      <aside className="rounded-3xl border border-black/10 bg-white p-5">
+      <aside className="panel-strong p-5">
         <div className="space-y-2">
           <p className="text-sm font-medium text-slate-950">Preview PDF</p>
           <p className="text-sm text-slate-600">Preview uses the exported PDF stream, not an HTML approximation.</p>

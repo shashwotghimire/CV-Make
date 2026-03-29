@@ -10,7 +10,7 @@ export default async function AdminUsersPage() {
       title="User overview"
       description="Clerk identity merged with your app database role and CV count."
     >
-      <div className="overflow-hidden rounded-3xl border border-black/10 bg-white">
+      <div className="panel-strong overflow-hidden">
         <table className="min-w-full text-left text-sm">
           <thead className="bg-slate-50 text-slate-500">
             <tr>

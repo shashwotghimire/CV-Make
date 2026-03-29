@@ -22,10 +22,10 @@ const features = [
 export default function Home() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
-      <section className="overflow-hidden rounded-[2rem] border border-black/10 bg-[linear-gradient(135deg,#fffdf6,#f5efe2)] p-8 shadow-[0_30px_120px_-70px_rgba(15,23,42,0.6)] md:p-14">
+      <section className="panel overflow-hidden bg-[linear-gradient(130deg,#f0fdfa,#ffffff_48%,#eef2ff)] p-8 md:p-14">
         <div className="grid gap-8 lg:grid-cols-[1.2fr,0.8fr] lg:items-end">
           <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+            <p className="eyebrow">
               CVMake v0
             </p>
             <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">
@@ -43,10 +43,10 @@ export default function Home() {
               </Link>
             </div>
           </div>
-          <div className="rounded-[2rem] border border-white/70 bg-white/85 p-6 backdrop-blur">
+          <div className="panel-strong rounded-[2rem] p-6">
             <div className="space-y-4">
-              <div className="rounded-3xl bg-slate-950 p-5 text-white">
-                <p className="text-xs uppercase tracking-[0.24em] text-amber-300">Live flow</p>
+              <div className="rounded-3xl bg-gradient-to-br from-slate-950 to-slate-800 p-5 text-white">
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-300">Live flow</p>
                 <h2 className="mt-2 text-2xl font-semibold">Profile → CV Builder → PDF</h2>
                 <p className="mt-3 text-sm leading-6 text-slate-300">
                   Update a project once. Push it into the right CVs. Keep bullet overrides where needed.
@@ -71,8 +71,10 @@ export default function Home() {
         {features.map((feature) => {
           const Icon = feature.icon;
           return (
-            <article key={feature.title} className="rounded-[2rem] border border-black/10 bg-white/85 p-6">
-              <Icon className="size-6 text-amber-700" />
+            <article key={feature.title} className="panel-strong rounded-[2rem] p-6">
+              <div className="inline-flex rounded-xl bg-teal-50 p-2">
+                <Icon className="size-6 text-teal-700" />
+              </div>
               <h2 className="mt-5 text-xl font-semibold text-slate-950">{feature.title}</h2>
               <p className="mt-3 text-sm leading-6 text-slate-600">{feature.body}</p>
             </article>
@@ -80,7 +82,7 @@ export default function Home() {
         })}
       </section>
 
-      <section className="mt-8 rounded-[2rem] border border-black/10 bg-white/85 p-8">
+      <section className="panel mt-8 rounded-[2rem] p-8">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.24em] text-slate-500">Phase guide</p>

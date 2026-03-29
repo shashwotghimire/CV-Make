@@ -146,7 +146,7 @@ export function ItemsManager({
 
   return (
     <div className="grid gap-6 xl:grid-cols-[360px,1fr]">
-      <form action={handleCreate} className="rounded-3xl border border-black/10 bg-white p-5">
+      <form action={handleCreate} className="panel-strong p-5">
         <h2 className="text-lg font-semibold text-slate-950">Add item</h2>
         <div className="mt-4 space-y-4">
           <label>
@@ -210,8 +210,8 @@ export function ItemsManager({
 
       <div className="space-y-4">
         {propagationItemId ? (
-          <div className="rounded-3xl border border-amber-300 bg-amber-50 p-5">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+          <div className="panel-strong border-teal-300 bg-teal-50/70 p-5">
+            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
               Propagation prompt
             </p>
             <h2 className="mt-2 text-lg font-semibold text-slate-950">
@@ -247,7 +247,7 @@ export function ItemsManager({
             </div>
           </div>
         ) : null}
-        <div className="flex items-center justify-between gap-4 rounded-3xl border border-black/10 bg-white p-4">
+        <div className="panel-strong flex items-center justify-between gap-4 p-4">
           <div>
             <p className="text-sm font-medium text-slate-950">Master item pool</p>
             <p className="text-sm text-slate-600">Filter by item type. Tags stay visible on each card.</p>
@@ -267,10 +267,10 @@ export function ItemsManager({
         </div>
         <div className="grid gap-4">
           {filteredItems.map((item) => (
-            <article key={item.id} className="rounded-3xl border border-black/10 bg-white p-5">
+            <article key={item.id} className="panel-strong p-5">
               <div className="flex items-start justify-between gap-4">
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-amber-700">
+                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-teal-700">
                     {item.type}
                   </p>
                   <h3 className="text-lg font-semibold text-slate-950">{item.title}</h3>
@@ -298,7 +298,7 @@ export function ItemsManager({
                       </span>
                     ))}
                     {item.technologies.map((tech) => (
-                      <span key={tech} className="rounded-full bg-amber-100 px-3 py-1 text-xs">
+                      <span key={tech} className="rounded-full bg-teal-100 px-3 py-1 text-xs text-teal-900">
                         {tech}
                       </span>
                     ))}
@@ -311,7 +311,7 @@ export function ItemsManager({
             </article>
           ))}
           {!filteredItems.length ? (
-            <div className="rounded-3xl border border-dashed border-black/20 bg-white/70 p-8 text-sm text-slate-500">
+            <div className="panel rounded-3xl border-dashed border-black/20 p-8 text-sm text-slate-500">
               No items in this filter yet.
             </div>
           ) : null}
