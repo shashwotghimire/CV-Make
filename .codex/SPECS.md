@@ -79,6 +79,7 @@ P6 Propagation
 - 073 | P7 Polish and Hardening | redesigned landing page IA/visual hierarchy (clear value proposition, workflow snapshot, step-by-step section, stronger CTA framing, improved readability) while preserving all routes/actions | homepage UX now significantly clearer and more conversion-oriented
 - 074 | P5 Export | restored Handlebars `eq` helper registration in renderer to support skill-branch logic in template HTML | fixed production preview/export failure (`Missing helper: "eq"`)
 - 075 | P5 Export | normalized section summary bullet rich-text rendering by adding list/paragraph reset rules to `.summary-list` (matching entry bullet behavior) in both seeded and starter templates | section bullets now preserve formatting consistency with quick-add bullets
+- 076 | P4 CV Builder | removed "Section bullets" editor block and related save flow from builder UI to reduce complexity and guide users toward quick-add entry bullets workflow | cleaner form UX with fewer competing bullet paths
 
 ## Completed phases
 - P1 Foundation

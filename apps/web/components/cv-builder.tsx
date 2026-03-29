@@ -356,41 +356,6 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
     });
   }
 
-  async function updateSectionBullets(sectionId: string, summaryBullets: string[]) {
-    startTransition(async () => {
-      const section = cvSections.find((entry) => entry.id === sectionId);
-      if (!section) return;
-
-      const response = await fetch(`/api/cvs/${cvId}/sections/${sectionId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: section.title,
-          order: section.order,
-          summaryBullets,
-        }),
-      });
-
-      if (!response.ok) {
-        setMessage("Section bullet save failed.");
-        return;
-      }
-
-      setCvSections((current) =>
-        current.map((entry) =>
-          entry.id === sectionId
-            ? {
-                ...entry,
-                summaryBullets,
-              }
-            : entry,
-        ),
-      );
-      setMessage("Section bullets saved.");
-      refreshPreview();
-    });
-  }
-
   async function createSectionEntry(section: Section) {
     const draft = getSectionEntryDraft(section);
     const title = draft.title.trim();
@@ -723,17 +688,6 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                   >
                     Clear
                   </button>
-                </div>
-              </details>
-
-              <details className="mt-4 rounded-2xl border border-black/10 p-4">
-                <summary className="cursor-pointer text-sm font-medium text-slate-800">Section bullets</summary>
-                <div className="mt-3">
-                  <RichBulletEditor
-                    initialBullets={section.summaryBullets}
-                    label="Section bullets"
-                    onSave={(bullets) => updateSectionBullets(section.id, bullets)}
-                  />
                 </div>
               </details>
 
