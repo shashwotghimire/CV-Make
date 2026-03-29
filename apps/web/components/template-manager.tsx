@@ -12,79 +12,94 @@ type TemplateRecord = {
   usageCount: number;
 };
 
-const starterTemplate = String.raw`<main style="font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;width:7.5in;max-width:100%;margin:0 auto;padding:0 2px;color:#111;background:#fff;font-size:10.4pt;line-height:1.14;overflow-wrap:anywhere;">
+const starterTemplate = String.raw`<main style="font-family:'Computer Modern','CMU Serif',Georgia,'Times New Roman',serif;max-width:750px;margin:0 auto;padding:24px 48px;color:#000000;background:#ffffff;font-size:14px;line-height:1.25;letter-spacing:0;">
   <style>
+    @import url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font.css');
+
     * { box-sizing: border-box; }
     body { margin: 0; }
-    p, ul, li { margin: 0; padding: 0; }
-    a { color: #111; text-decoration: underline; text-underline-offset: 1px; }
+    p { margin: 0; }
+    ul, li { margin: 0; }
+    a { color: #000000; text-decoration: underline; }
 
-    .resume-header { text-align: center; margin: 0 0 6px; }
-    .resume-name { margin: 0; font-size: 22pt; line-height: 1; font-weight: 700; }
+    .resume-header { text-align: center; margin: 0 0 8px; }
+    .resume-name { margin: 0; font-size: 42px; line-height: 1; font-weight: 700; }
     .resume-contact {
-      margin-top: 4px;
-      font-size: 10.6pt;
-      line-height: 1.08;
+      margin-top: 3px;
+      font-size: 13px;
+      line-height: 1.15;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      column-gap: 0;
+      column-gap: 2px;
       row-gap: 0;
     }
-    .resume-contact span { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
+    .resume-contact span { display: inline-block; max-width: 100%; overflow-wrap: break-word; }
 
-    .resume-section { margin-top: 5px; }
+    .resume-section { margin-top: 10px; }
     .resume-section-title {
-      margin: 0;
-      padding: 0 0 1px;
-      font-size: 12.6pt;
-      line-height: 1.05;
-      font-weight: 500;
+      margin: 0 0 1px 0;
+      padding: 0;
+      font-size: 13px;
+      line-height: 1.15;
+      font-weight: 700;
       letter-spacing: 0;
       font-variant: normal;
       text-transform: none;
-      border-bottom: 1px solid #7c7c7c;
+    }
+    .section-rule {
+      border: none;
+      border-top: 1px solid #000;
+      margin: 0 0 4px 0;
     }
 
     .summary-list {
-      margin: 1px 0 2px 10px;
-      font-size: 10.2pt;
-      line-height: 1.06;
+      margin-top: 2px;
+      margin-bottom: 0;
+      padding-left: 1.5em;
+      list-style-type: disc;
+      list-style-position: outside;
+      font-size: 13px;
+      line-height: 1.3;
     }
-    .summary-list li { margin: 0; }
+    .summary-list li { margin-bottom: 1px; padding-left: 0; overflow-wrap: break-word; }
 
-    .resume-entry { margin-top: 1px; }
+    .resume-entry { margin: 0 0 5px 0; }
     .entry-primary {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-      column-gap: 10px;
+      align-items: baseline;
+      column-gap: 12px;
       margin-top: 0;
-      padding-left: 2ch;
+      padding-left: 1.5em;
     }
-    .entry-title { font-size: 10.8pt; font-weight: 700; line-height: 1.05; min-width: 0; overflow-wrap: anywhere; }
-    .entry-right-title { font-size: 10.6pt; font-weight: 500; line-height: 1.05; max-width: 20ch; text-align: right; overflow-wrap: anywhere; }
+    .entry-title { font-size: 13px; font-weight: 700; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
+    .entry-right-title { font-size: 13px; font-weight: 400; line-height: 1.25; max-width: 24ch; text-align: right; overflow-wrap: break-word; }
 
     .entry-secondary {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
-      align-items: start;
-      column-gap: 10px;
+      align-items: baseline;
+      column-gap: 12px;
       margin-top: 0;
-      padding-left: 2ch;
+      padding-left: 1.5em;
     }
-    .entry-subtitle { font-size: 10.1pt; font-style: italic; line-height: 1.05; min-width: 0; overflow-wrap: anywhere; }
-    .entry-right-subtitle { font-size: 10.1pt; font-style: italic; line-height: 1.05; max-width: 20ch; text-align: right; overflow-wrap: anywhere; }
+    .entry-subtitle { font-size: 13px; font-style: italic; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
+    .entry-right-subtitle { font-size: 13px; font-style: italic; line-height: 1.25; max-width: 24ch; text-align: right; overflow-wrap: break-word; }
 
-    .entry-description { margin-top: 0; padding-left: 2ch; font-size: 10pt; line-height: 1.06; overflow-wrap: anywhere; }
-    .entry-url { margin-top: 0; padding-left: 2ch; font-size: 10pt; line-height: 1.04; overflow-wrap: anywhere; }
+    .entry-description { margin-top: 0; padding-left: 1.5em; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
+    .entry-url { margin-top: 0; padding-left: 1.5em; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
 
     .entry-bullets {
-      margin: 1px 0 2px 4.2ch;
-      font-size: 10pt;
-      line-height: 1.06;
+      margin-top: 2px;
+      margin-bottom: 0;
+      padding-left: 1.5em;
+      list-style-type: disc;
+      list-style-position: outside;
+      font-size: 13px;
+      line-height: 1.3;
     }
-    .entry-bullets li { margin: 0; overflow-wrap: anywhere; }
+    .entry-bullets li { margin-bottom: 1px; line-height: 1.3; padding-left: 0; overflow-wrap: break-word; }
     .entry-bullets li p { margin: 0; }
 
     .entry-tech { font-style: italic; font-weight: 400; }
@@ -104,6 +119,7 @@ const starterTemplate = String.raw`<main style="font-family:'Lato','Helvetica Ne
   {{#each sections}}
     <section class="resume-section">
       <h2 class="resume-section-title">{{title}}</h2>
+      <hr class="section-rule" />
 
       {{#if summaryBullets.length}}
         <ul class="summary-list">
