@@ -2,10 +2,15 @@ import { PrismaClient, Role } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const overleafInspiredTemplate = String.raw`<main style="font-family:'Computer Modern','CMU Serif',Georgia,'Times New Roman',serif;max-width:750px;margin:0 auto;padding:24px 48px;color:#000000;background:#ffffff;font-size:14px;line-height:1.25;letter-spacing:0;">
+const overleafInspiredTemplate = String.raw`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font.css" />
+</head>
+<body>
+<main style="font-family:'Computer Modern',serif;max-width:750px;margin:0 auto;padding:24px 48px;color:#000000;background:#ffffff;font-size:14px;line-height:1.25;letter-spacing:0;">
   <style>
-    @import url('https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/font.css');
-
     * { box-sizing: border-box; }
     body { margin: 0; }
     p { margin: 0; }
@@ -55,35 +60,49 @@ const overleafInspiredTemplate = String.raw`<main style="font-family:'Computer M
     .summary-list li { margin-bottom: 1px; padding-left: 0; overflow-wrap: break-word; }
 
     .resume-entry { margin: 0 0 5px 0; }
+    .entry-content { width: 100%; margin-left: 1.5em; }
     .entry-primary {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
       align-items: baseline;
-      column-gap: 12px;
-      margin-top: 0;
-      padding-left: 1.5em;
+      margin: 0;
     }
-    .entry-title { font-size: 13px; font-weight: 700; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
-    .entry-right-title { font-size: 13px; font-weight: 400; line-height: 1.25; max-width: 24ch; text-align: right; overflow-wrap: break-word; }
+    .entry-title-wrap {
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+    .entry-title { font-size: 13px; font-weight: 700; line-height: 1.25; overflow-wrap: break-word; }
+    .entry-right-title {
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 1.25;
+      white-space: nowrap;
+      flex-shrink: 0;
+      text-align: right;
+    }
 
     .entry-secondary {
+      width: 100%;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: baseline;
       column-gap: 12px;
       margin-top: 0;
-      padding-left: 1.5em;
+      font-style: italic;
     }
-    .entry-subtitle { font-size: 13px; font-style: italic; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
-    .entry-right-subtitle { font-size: 13px; font-style: italic; line-height: 1.25; max-width: 24ch; text-align: right; overflow-wrap: break-word; }
+    .entry-subtitle { font-size: 13px; line-height: 1.25; min-width: 0; overflow-wrap: break-word; }
+    .entry-right-subtitle { font-size: 13px; line-height: 1.25; text-align: right; white-space: nowrap; }
 
-    .entry-description { margin-top: 0; padding-left: 1.5em; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
-    .entry-url { margin-top: 0; padding-left: 1.5em; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
+    .entry-description { margin-top: 0; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
+    .entry-url { margin-top: 0; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
 
     .entry-bullets {
       margin-top: 2px;
       margin-bottom: 0;
-      padding-left: 1.5em;
+      margin-left: 0;
+      padding-left: 1.2em;
       list-style-type: disc;
       list-style-position: outside;
       font-size: 13px;
@@ -121,38 +140,44 @@ const overleafInspiredTemplate = String.raw`<main style="font-family:'Computer M
 
       {{#each items}}
         <article class="resume-entry">
-          <div class="entry-primary">
-            <div class="entry-title">
-              {{title}}{{#if technologies.length}} <span class="entry-tech">| {{#each technologies}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</span>{{/if}}
+          <div class="entry-content">
+            <div class="entry-primary">
+              <div class="entry-title-wrap">
+                <span class="entry-title">
+                  {{title}}{{#if technologies.length}} <span class="entry-tech">| {{#each technologies}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}</span>{{/if}}
+                </span>
+              </div>
+              {{#if rightTitle}}<span class="entry-right-title">{{rightTitle}}</span>{{/if}}
             </div>
-            {{#if rightTitle}}<div class="entry-right-title">{{rightTitle}}</div>{{/if}}
+
+            <div class="entry-secondary">
+              {{#if subtitle}}<div class="entry-subtitle">{{subtitle}}</div>{{else}}<div class="entry-subtitle"></div>{{/if}}
+              {{#if rightSubtitle}}<div class="entry-right-subtitle">{{rightSubtitle}}</div>{{/if}}
+            </div>
+
+            {{#if description}}
+              <p class="entry-description">{{description}}</p>
+            {{/if}}
+
+            {{#if url}}
+              <p class="entry-url"><a href="{{url}}">{{url}}</a></p>
+            {{/if}}
+
+            {{#if bullets.length}}
+              <ul class="entry-bullets">
+                {{#each bullets}}
+                  <li>{{{this}}}</li>
+                {{/each}}
+              </ul>
+            {{/if}}
           </div>
-
-          <div class="entry-secondary">
-            {{#if subtitle}}<div class="entry-subtitle">{{subtitle}}</div>{{else}}<div class="entry-subtitle"></div>{{/if}}
-            {{#if rightSubtitle}}<div class="entry-right-subtitle">{{rightSubtitle}}</div>{{/if}}
-          </div>
-
-          {{#if description}}
-            <p class="entry-description">{{description}}</p>
-          {{/if}}
-
-          {{#if url}}
-            <p class="entry-url"><a href="{{url}}">{{url}}</a></p>
-          {{/if}}
-
-          {{#if bullets.length}}
-            <ul class="entry-bullets">
-              {{#each bullets}}
-                <li>{{{this}}}</li>
-              {{/each}}
-            </ul>
-          {{/if}}
         </article>
       {{/each}}
     </section>
   {{/each}}
-</main>`;
+</main>
+</body>
+</html>`;
 
 async function main() {
   const adminClerkId = process.env.SEED_ADMIN_CLERK_USER_ID;

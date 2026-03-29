@@ -70,6 +70,7 @@ P6 Propagation
 - 064 | P5 Export | hardened Vercel chromium boot with explicit bin-dir probing + executablePath(binDir) fallback and broadened output tracing include scope | prevents pnpm path mismatch when locating brotli assets in lambda
 - 065 | P5 Export | tightened template typography rhythm (smaller sizes, reduced line-height, reduced section/entry gaps, shallower indents) to better match Overleaf density and remove excess whitespace | PDF now visually denser and closer to target
 - 066 | P5 Export | replaced approximate typography with exact numeric styling spec (Computer Modern import/stack, 14px base, 13px section+rows, precise margins, hr rule, bullet indent behavior) | template now follows explicit Overleaf-like measurements
+- 067 | P5 Export | fixed row/bullet rendering bugs per explicit spec: row-1 flex alignment with constrained right span, row-2 full-line italics, per-entry content wrapper for inherited bullet boundary, and head-level Computer Modern stylesheet link | PDF hierarchy alignment now matches requested behavior
 
 ## Completed phases
 - P1 Foundation
