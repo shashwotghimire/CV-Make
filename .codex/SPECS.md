@@ -65,6 +65,7 @@ P6 Propagation
 - 059 | P5 Export | fixed Vercel preview/export Puppeteer runtime by adding `@sparticuz/chromium` + `puppeteer-core` launch path with Node runtime fallback for local dev | PDF preview/export now environment-compatible
 - 060 | P7 Polish and Hardening | created `.codex/RULES.md` and added initial agent rule for auto-push to main after feature completion | project-level agent rulebook started
 - 061 | P5 Export | fixed Next serverless externals for Vercel PDF stack (`puppeteer-core` + `@sparticuz/chromium`) and improved export error logging context | deploy/runtime failure diagnosis improved
+- 062 | P5 Export | added stronger Chromium path checks and surfaced exact preview/export error details in API JSON response for production debugging | Vercel PDF failures now directly diagnosable from client response
 
 ## Completed phases
 - P1 Foundation

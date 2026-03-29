@@ -13,12 +13,18 @@ export const runtime = "nodejs";
 
 async function launchBrowser() {
   if (process.env.VERCEL) {
-    const executablePath = await chromium.executablePath();
+    const executablePath = process.env.CHROMIUM_EXECUTABLE_PATH || (await chromium.executablePath());
+
+    if (!executablePath) {
+      throw new Error("Chromium executable path not resolved on Vercel");
+    }
+
     return puppeteerCore.launch({
       executablePath,
       args: chromium.args,
       defaultViewport: { width: 1200, height: 1697 },
       headless: true,
+      protocolTimeout: 120_000,
     });
   }
 
@@ -28,6 +34,7 @@ async function launchBrowser() {
     executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || localChromePath,
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    protocolTimeout: 120_000,
   });
 }
 
@@ -55,6 +62,8 @@ async function buildPdf(cvId: string, profileId: string) {
   const html = renderCVHtml(payload, cv.template.templateHtml);
   const browser = await launchBrowser();
   const page = await browser.newPage();
+  await page.setBypassCSP(true);
+  await page.setViewport({ width: 1200, height: 1697, deviceScaleFactor: 1 });
   await page.setContent(html, { waitUntil: "networkidle0" });
   const pdf = await page.pdf({ format: "A4", printBackground: true });
   await browser.close();
@@ -89,7 +98,10 @@ export async function GET(
     const message = error instanceof Error ? error.message : String(error);
     console.error("PDF preview failed", message, error);
     return NextResponse.json(
-      { error: "Preview failed. Check Puppeteer configuration." },
+      {
+        error: "Preview failed. Check Puppeteer configuration.",
+        details: message,
+      },
       { status: 500 },
     );
   }
@@ -122,7 +134,10 @@ export async function POST(
     const message = error instanceof Error ? error.message : String(error);
     console.error("PDF export failed", message, error);
     return NextResponse.json(
-      { error: "Export failed. Check Puppeteer or Cloudinary config." },
+      {
+        error: "Export failed. Check Puppeteer or Cloudinary config.",
+        details: message,
+      },
       { status: 500 },
     );
   }
