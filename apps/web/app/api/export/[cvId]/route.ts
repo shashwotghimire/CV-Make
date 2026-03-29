@@ -86,7 +86,8 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error("PDF preview failed", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("PDF preview failed", message, error);
     return NextResponse.json(
       { error: "Preview failed. Check Puppeteer configuration." },
       { status: 500 },
@@ -118,7 +119,8 @@ export async function POST(
       expiresInHours: 24,
     });
   } catch (error) {
-    console.error("PDF export failed", error);
+    const message = error instanceof Error ? error.message : String(error);
+    console.error("PDF export failed", message, error);
     return NextResponse.json(
       { error: "Export failed. Check Puppeteer or Cloudinary config." },
       { status: 500 },
