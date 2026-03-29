@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
 import { UserButton } from "@clerk/nextjs";
 import { hasClerkPublishableKey } from "@/lib/clerk-config";
-import { AppSidebar } from "./app-sidebar";
+import { AppNavbar } from "./app-navbar";
 
 export function AppFrame({ children }: { children: ReactNode }) {
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[1500px] gap-5 px-4 py-5 md:px-6">
-      <AppSidebar />
-      <main className="panel min-w-0 flex-1 p-5 md:p-7">
-        <div className="mb-6 flex items-center justify-end">
+    <div className="mx-auto min-h-screen w-full max-w-[1500px] px-4 py-5 md:px-6">
+      <AppNavbar />
+      <main className="panel min-w-0 p-5 md:p-7">
+        <div className="mb-5 flex items-center justify-end">
           {hasClerkPublishableKey ? (
             <UserButton />
           ) : (

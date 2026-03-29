@@ -22,44 +22,59 @@ const features = [
 export default function Home() {
   return (
     <div className="mx-auto max-w-7xl px-4 py-6 md:px-6">
-      <section className="panel overflow-hidden bg-[linear-gradient(130deg,#f0fdfa,#ffffff_48%,#eef2ff)] p-8 md:p-14">
-        <div className="grid gap-8 lg:grid-cols-[1.2fr,0.8fr] lg:items-end">
+      <section className="panel overflow-hidden bg-[radial-gradient(circle_at_10%_15%,rgba(13,148,136,0.2),transparent_34%),radial-gradient(circle_at_82%_18%,rgba(59,130,246,0.16),transparent_26%),linear-gradient(150deg,#f0fdfa,#f8fafc_44%,#eef2ff)] p-8 md:p-12">
+        <div className="grid gap-10 lg:grid-cols-[1.15fr,0.85fr] lg:items-end">
           <div className="space-y-6">
-            <p className="eyebrow">
-              CVMake v0
-            </p>
-            <h1 className="max-w-4xl text-5xl font-semibold tracking-tight text-slate-950 md:text-6xl">
-              Build every CV from one career source of truth.
+            <p className="eyebrow">CVMake 2026</p>
+            <h1 className="max-w-4xl text-[2.7rem] font-semibold tracking-tight text-slate-950 md:text-[4rem] md:leading-[1.02]">
+              One structured profile.
+              <br />
+              Many tailored resumes.
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-slate-600">
-              CVMake keeps your projects, experiences, skills, and education in one master profile so tailored resumes stop drifting out of sync.
+              Build role-specific CVs without copy-paste drift. Centralize your items, customize per-CV hierarchy, and preview export-grade output instantly.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link className="btn-primary" href="/sign-up">
                 Get started
+                <ArrowRight className="ml-2 size-4" />
               </Link>
               <Link className="btn-secondary" href="/dashboard">
                 Open dashboard
               </Link>
             </div>
+            <div className="grid max-w-2xl grid-cols-3 gap-3">
+              <div className="rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-center">
+                <p className="text-xs uppercase tracking-[0.14em] text-slate-500">Source</p>
+                <p className="text-sm font-semibold text-slate-900">Master Items</p>
+              </div>
+              <div className="rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-center">
+                <p className="text-xs uppercase tracking-[0.14em] text-slate-500">Build</p>
+                <p className="text-sm font-semibold text-slate-900">CV Variants</p>
+              </div>
+              <div className="rounded-xl border border-black/10 bg-white/80 px-3 py-2 text-center">
+                <p className="text-xs uppercase tracking-[0.14em] text-slate-500">Export</p>
+                <p className="text-sm font-semibold text-slate-900">PDF Ready</p>
+              </div>
+            </div>
           </div>
-          <div className="panel-strong rounded-[2rem] p-6">
-            <div className="space-y-4">
-              <div className="rounded-3xl bg-gradient-to-br from-slate-950 to-slate-800 p-5 text-white">
-                <p className="text-xs uppercase tracking-[0.24em] text-cyan-300">Live flow</p>
-                <h2 className="mt-2 text-2xl font-semibold">Profile → CV Builder → PDF</h2>
+          <div className="panel-strong p-6">
+            <div className="space-y-5">
+              <div className="rounded-2xl bg-gradient-to-br from-slate-950 to-slate-800 p-5 text-white">
+                <p className="text-xs uppercase tracking-[0.24em] text-cyan-300">Live editing flow</p>
+                <h2 className="mt-2 text-2xl font-semibold">Profile → Builder → Preview</h2>
                 <p className="mt-3 text-sm leading-6 text-slate-300">
-                  Update a project once. Push it into the right CVs. Keep bullet overrides where needed.
+                  Keep one source of truth and customize only what each target role needs.
                 </p>
               </div>
               <div className="grid gap-3">
                 <div className="rounded-2xl border border-black/10 bg-white p-4">
-                  <p className="text-sm font-medium text-slate-950">Role tags</p>
-                  <p className="mt-1 text-sm text-slate-600">frontend, backend, fullstack, academic, internship</p>
+                  <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Workflow strength</p>
+                  <p className="mt-1 text-sm font-medium text-slate-900">Section hierarchy controls + reusable item pool</p>
                 </div>
                 <div className="rounded-2xl border border-black/10 bg-white p-4">
-                  <p className="text-sm font-medium text-slate-950">Status tags</p>
-                  <p className="mt-1 text-sm text-slate-600">featured, recent, archived</p>
+                  <p className="text-xs uppercase tracking-[0.16em] text-slate-500">Speed</p>
+                  <p className="mt-1 text-sm font-medium text-slate-900">Instant preview refresh after edits</p>
                 </div>
               </div>
             </div>

@@ -515,7 +515,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
   }
 
   return (
-    <div className="grid gap-6 xl:grid-cols-[320px,1fr,360px]">
+    <div className="grid gap-6 xl:grid-cols-[300px,1fr,minmax(420px,0.95fr)]">
       <aside className="panel-strong p-5">
         <div className="flex items-center justify-between gap-4">
           <div>
@@ -562,7 +562,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         </div>
       </aside>
 
-      <section className="space-y-4">
+      <section className="space-y-4 xl:min-w-0">
         <details className="panel-strong p-5" open>
           <summary className="cursor-pointer text-sm font-medium text-slate-800">Add section</summary>
           <div className="mt-3 flex gap-3">
@@ -600,8 +600,8 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                 <summary className="cursor-pointer text-sm font-medium text-slate-800">Quick add entry</summary>
                 <p className="mt-2 text-xs text-slate-600">Use the four hierarchy fields. Optional metadata stays collapsed.</p>
 
-                <div className="mt-3 grid gap-3 lg:grid-cols-2">
-                  <label>
+                <div className="form-grid mt-3">
+                  <label className="form-field">
                     <span className="label-text">Heading</span>
                     <input
                       className="input-base"
@@ -614,7 +614,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                       value={sectionEntryDraft.title}
                     />
                   </label>
-                  <label>
+                  <label className="form-field">
                     <span className="label-text">Right side</span>
                     <input
                       className="input-base"
@@ -627,7 +627,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                       value={sectionEntryDraft.rightTitle}
                     />
                   </label>
-                  <label>
+                  <label className="form-field">
                     <span className="label-text">Subheading</span>
                     <input
                       className="input-base"
@@ -640,7 +640,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                       value={sectionEntryDraft.subtitle}
                     />
                   </label>
-                  <label>
+                  <label className="form-field">
                     <span className="label-text">Additional info</span>
                     <input
                       className="input-base"
@@ -655,7 +655,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                   </label>
                 </div>
 
-                <label className="mt-3 block">
+                <label className="form-field mt-3 block">
                   <span className="label-text">Bullets (optional, one per line)</span>
                   <textarea
                     className="input-base min-h-24"
@@ -672,7 +672,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                 <details className="mt-3 rounded-xl border border-black/10 px-4 py-3">
                   <summary className="cursor-pointer text-sm font-medium text-slate-700">Optional fields</summary>
                   <div className="mt-3 grid gap-3 lg:grid-cols-[180px,1fr]">
-                    <label>
+                    <label className="form-field">
                       <span className="label-text">Entry type</span>
                       <select
                         className="input-base"
@@ -690,7 +690,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                         <option value="CERTIFICATION">Certification</option>
                       </select>
                     </label>
-                    <label>
+                    <label className="form-field">
                       <span className="label-text">Technologies (comma separated)</span>
                       <input
                         className="input-base"
@@ -760,8 +760,8 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
 
                       <details className="mt-3 rounded-xl border border-black/10 bg-white px-4 py-3">
                         <summary className="cursor-pointer text-sm font-medium text-slate-700">Edit entry details and bullets</summary>
-                        <div className="mt-3 grid gap-3 md:grid-cols-2">
-                          <label>
+                        <div className="form-grid mt-3">
+                          <label className="form-field">
                             <span className="label-text">Heading</span>
                             <input
                               className="input-base"
@@ -769,7 +769,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                               value={draft.customTitle}
                             />
                           </label>
-                          <label>
+                          <label className="form-field">
                             <span className="label-text">Right side</span>
                             <input
                               className="input-base"
@@ -777,7 +777,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                               value={draft.customRightTitle}
                             />
                           </label>
-                          <label>
+                          <label className="form-field">
                             <span className="label-text">Subheading</span>
                             <input
                               className="input-base"
@@ -785,7 +785,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                               value={draft.customSubtitle}
                             />
                           </label>
-                          <label>
+                          <label className="form-field">
                             <span className="label-text">Additional info</span>
                             <input
                               className="input-base"
@@ -822,13 +822,13 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         })}
       </section>
 
-      <aside className="panel-strong p-5">
+      <aside className="panel-strong sticky top-5 h-[calc(100vh-7rem)] p-4">
         <div className="space-y-2">
           <p className="text-sm font-medium text-slate-950">Preview PDF</p>
           <p className="text-sm text-slate-600">Preview uses the exported PDF stream, not an HTML approximation.</p>
         </div>
         <iframe
-          className="mt-4 h-[720px] w-full rounded-2xl border border-black/10"
+          className="mt-3 h-[calc(100%-3.8rem)] min-h-[560px] w-full rounded-2xl border border-black/10 bg-white"
           key={previewReloadToken ?? "initial-preview"}
           src={previewReloadToken ? `${previewHref}?v=${previewReloadToken}` : previewHref}
           title="CV preview"

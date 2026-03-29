@@ -148,8 +148,8 @@ export function ItemsManager({
     <div className="grid gap-6 xl:grid-cols-[360px,1fr]">
       <form action={handleCreate} className="panel-strong p-5">
         <h2 className="text-lg font-semibold text-slate-950">Add item</h2>
-        <div className="mt-4 space-y-4">
-          <label>
+        <div className="mt-4 space-y-3">
+          <label className="form-field">
             <span className="label-text">Type</span>
             <select className="input-base" name="type" defaultValue="PROJECT">
               <option value="PROJECT">Project</option>
@@ -159,45 +159,45 @@ export function ItemsManager({
               <option value="CERTIFICATION">Certification</option>
             </select>
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Title</span>
             <input className="input-base" name="title" required />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Subheading</span>
             <input className="input-base" name="subtitle" placeholder="Software Engineer / B.S. Computer Science" />
           </label>
-          <div className="grid gap-4 md:grid-cols-2">
-            <label>
+          <div className="form-grid">
+            <label className="form-field">
               <span className="label-text">Start date</span>
               <input className="input-base" name="dateStart" type="month" />
             </label>
-            <label>
+            <label className="form-field">
               <span className="label-text">End date</span>
               <input className="input-base" name="dateEnd" type="month" />
             </label>
           </div>
-          <label>
+          <label className="form-field">
             <span className="label-text">Right-side info (location)</span>
             <input className="input-base" name="location" placeholder="City, State" />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Description</span>
             <textarea className="input-base min-h-28" name="description" />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Bullets (one per line)</span>
             <textarea className="input-base min-h-28" name="bullets" placeholder="Built X that improved Y\nLed Z and reduced A" />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">URL</span>
             <input className="input-base" name="url" placeholder="https://example.com" type="url" />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Technologies</span>
             <input className="input-base" name="technologies" placeholder="Next.js, Prisma, Clerk" />
           </label>
-          <label>
+          <label className="form-field">
             <span className="label-text">Tags</span>
             <input className="input-base" name="tags" placeholder="frontend, featured" />
           </label>
