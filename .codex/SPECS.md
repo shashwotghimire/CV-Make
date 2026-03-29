@@ -68,6 +68,7 @@ P6 Propagation
 - 062 | P5 Export | added stronger Chromium path checks and surfaced exact preview/export error details in API JSON response for production debugging | Vercel PDF failures now directly diagnosable from client response
 - 063 | P5 Export | fixed Vercel file tracing for `@sparticuz/chromium` brotli assets by including chromium `bin/**` in Next output tracing and bundling package instead of externalizing | runtime can now locate Chromium binaries in serverless
 - 064 | P5 Export | hardened Vercel chromium boot with explicit bin-dir probing + executablePath(binDir) fallback and broadened output tracing include scope | prevents pnpm path mismatch when locating brotli assets in lambda
+- 065 | P5 Export | tightened template typography rhythm (smaller sizes, reduced line-height, reduced section/entry gaps, shallower indents) to better match Overleaf density and remove excess whitespace | PDF now visually denser and closer to target
 
 ## Completed phases
 - P1 Foundation

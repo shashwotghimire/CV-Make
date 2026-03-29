@@ -12,79 +12,79 @@ type TemplateRecord = {
   usageCount: number;
 };
 
-const starterTemplate = String.raw`<main style="font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;width:7.5in;max-width:100%;margin:0 auto;padding:0 2px;color:#111;background:#fff;font-size:11pt;line-height:1.22;overflow-wrap:anywhere;">
+const starterTemplate = String.raw`<main style="font-family:'Lato','Helvetica Neue',Helvetica,Arial,sans-serif;width:7.5in;max-width:100%;margin:0 auto;padding:0 2px;color:#111;background:#fff;font-size:10.4pt;line-height:1.14;overflow-wrap:anywhere;">
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; }
     p, ul, li { margin: 0; padding: 0; }
     a { color: #111; text-decoration: underline; text-underline-offset: 1px; }
 
-    .resume-header { text-align: center; margin: 0 0 10px; }
-    .resume-name { margin: 0; font-size: 30pt; line-height: 1; font-weight: 700; }
+    .resume-header { text-align: center; margin: 0 0 6px; }
+    .resume-name { margin: 0; font-size: 22pt; line-height: 1; font-weight: 700; }
     .resume-contact {
       margin-top: 4px;
-      font-size: 12pt;
-      line-height: 1.15;
+      font-size: 10.6pt;
+      line-height: 1.08;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       column-gap: 0;
-      row-gap: 1px;
+      row-gap: 0;
     }
     .resume-contact span { display: inline-block; max-width: 100%; overflow-wrap: anywhere; }
 
-    .resume-section { margin-top: 8px; }
+    .resume-section { margin-top: 5px; }
     .resume-section-title {
       margin: 0;
       padding: 0 0 1px;
-      font-size: 14.2pt;
-      line-height: 1.1;
+      font-size: 12.6pt;
+      line-height: 1.05;
       font-weight: 500;
       letter-spacing: 0;
       font-variant: normal;
       text-transform: none;
-      border-bottom: 1px solid #707070;
+      border-bottom: 1px solid #7c7c7c;
     }
 
     .summary-list {
-      margin: 2px 0 4px 17px;
-      font-size: 11pt;
-      line-height: 1.2;
+      margin: 1px 0 2px 10px;
+      font-size: 10.2pt;
+      line-height: 1.06;
     }
-    .summary-list li { margin: 0 0 1px; }
+    .summary-list li { margin: 0; }
 
-    .resume-entry { margin-top: 4px; }
+    .resume-entry { margin-top: 1px; }
     .entry-primary {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: start;
-      column-gap: 14px;
-      margin-top: 1px;
-      padding-left: 6ch;
+      column-gap: 10px;
+      margin-top: 0;
+      padding-left: 2ch;
     }
-    .entry-title { font-size: 12.4pt; font-weight: 700; line-height: 1.12; min-width: 0; overflow-wrap: anywhere; }
-    .entry-right-title { font-size: 12.2pt; font-weight: 500; line-height: 1.12; max-width: 24ch; text-align: right; overflow-wrap: anywhere; }
+    .entry-title { font-size: 10.8pt; font-weight: 700; line-height: 1.05; min-width: 0; overflow-wrap: anywhere; }
+    .entry-right-title { font-size: 10.6pt; font-weight: 500; line-height: 1.05; max-width: 20ch; text-align: right; overflow-wrap: anywhere; }
 
     .entry-secondary {
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       align-items: start;
-      column-gap: 14px;
-      margin-top: 1px;
-      padding-left: 6ch;
+      column-gap: 10px;
+      margin-top: 0;
+      padding-left: 2ch;
     }
-    .entry-subtitle { font-size: 11.5pt; font-style: italic; line-height: 1.1; min-width: 0; overflow-wrap: anywhere; }
-    .entry-right-subtitle { font-size: 11.5pt; font-style: italic; line-height: 1.1; max-width: 24ch; text-align: right; overflow-wrap: anywhere; }
+    .entry-subtitle { font-size: 10.1pt; font-style: italic; line-height: 1.05; min-width: 0; overflow-wrap: anywhere; }
+    .entry-right-subtitle { font-size: 10.1pt; font-style: italic; line-height: 1.05; max-width: 20ch; text-align: right; overflow-wrap: anywhere; }
 
-    .entry-description { margin-top: 1px; padding-left: 6ch; font-size: 11pt; line-height: 1.16; overflow-wrap: anywhere; }
-    .entry-url { margin-top: 1px; padding-left: 6ch; font-size: 10.8pt; line-height: 1.14; overflow-wrap: anywhere; }
+    .entry-description { margin-top: 0; padding-left: 2ch; font-size: 10pt; line-height: 1.06; overflow-wrap: anywhere; }
+    .entry-url { margin-top: 0; padding-left: 2ch; font-size: 10pt; line-height: 1.04; overflow-wrap: anywhere; }
 
     .entry-bullets {
-      margin: 3px 0 5px 12ch;
-      font-size: 11pt;
-      line-height: 1.18;
+      margin: 1px 0 2px 4.2ch;
+      font-size: 10pt;
+      line-height: 1.06;
     }
-    .entry-bullets li { margin: 0 0 1px; overflow-wrap: anywhere; }
+    .entry-bullets li { margin: 0; overflow-wrap: anywhere; }
     .entry-bullets li p { margin: 0; }
 
     .entry-tech { font-style: italic; font-weight: 400; }
