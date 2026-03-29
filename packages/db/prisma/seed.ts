@@ -19,7 +19,7 @@ const overleafInspiredTemplate = String.raw`<!DOCTYPE html>
     a { color: inherit; text-decoration: none; }
 
     .resume-header { text-align: center; margin: 0 0 8px; }
-    .resume-name { margin: 0; font-size: 42px; line-height: 1; font-weight: 700; }
+    .resume-name { margin: 0; font-size: 37px; line-height: 1; font-weight: 600; }
     .resume-contact {
       margin-top: 3px;
       font-size: 13px;
@@ -32,7 +32,7 @@ const overleafInspiredTemplate = String.raw`<!DOCTYPE html>
     }
     .resume-contact span { display: inline-block; max-width: 100%; overflow-wrap: break-word; }
 
-    .resume-section { margin-top: 10px; }
+    .resume-section { margin-top: 23px; }
     .resume-section-title {
       margin: 0 0 1px 0;
       padding: 0;
@@ -107,10 +107,10 @@ const overleafInspiredTemplate = String.raw`<!DOCTYPE html>
     .entry-url { margin-top: 0; font-size: 13px; line-height: 1.25; overflow-wrap: break-word; }
 
     .entry-bullets {
-      margin: 2px 0 0 0;
-      padding-left: 1.2em;
+      margin: 1em 0 0 1.2em;
+      padding-left: 0;
       list-style-type: disc;
-      list-style-position: outside;
+      list-style-position: inside;
       font-size: 13px;
       line-height: 1.3;
     }

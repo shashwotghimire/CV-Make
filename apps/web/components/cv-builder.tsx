@@ -359,11 +359,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
   async function createSectionEntry(section: Section) {
     const draft = getSectionEntryDraft(section);
     const title = draft.title.trim();
-
-    if (!title) {
-      setMessage("Entry heading is required.");
-      return;
-    }
+    const persistedTitle = title || "Untitled entry";
 
     const bullets = splitLines(draft.bulletsText);
     const technologies = splitCommaSeparated(draft.technologiesText);
@@ -374,7 +370,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           type: draft.type,
-          title,
+          title: persistedTitle,
           subtitle: draft.subtitle.trim() || null,
           description: null,
           bullets,
@@ -567,7 +563,7 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
 
                 <div className="form-grid mt-3">
                   <label className="form-field">
-                    <span className="label-text">Heading</span>
+                    <span className="label-text">Heading (optional)</span>
                     <input
                       className="input-base"
                       onChange={(event) =>
@@ -715,9 +711,9 @@ export function CVBuilder({ cvId, sections, pool, previewHref }: BuilderProps) {
                       <details className="mt-3 rounded-xl border border-black/10 bg-white px-4 py-3">
                         <summary className="cursor-pointer text-sm font-medium text-slate-700">Edit entry details and bullets</summary>
                         <div className="form-grid mt-3">
-                          <label className="form-field">
-                            <span className="label-text">Heading</span>
-                            <input
+                  <label className="form-field">
+                    <span className="label-text">Heading (optional)</span>
+                    <input
                               className="input-base"
                               onChange={(event) => updateDraft(entry, { customTitle: event.target.value })}
                               value={draft.customTitle}

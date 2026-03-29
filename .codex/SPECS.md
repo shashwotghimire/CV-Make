@@ -80,6 +80,7 @@ P6 Propagation
 - 074 | P5 Export | restored Handlebars `eq` helper registration in renderer to support skill-branch logic in template HTML | fixed production preview/export failure (`Missing helper: "eq"`)
 - 075 | P5 Export | normalized section summary bullet rich-text rendering by adding list/paragraph reset rules to `.summary-list` (matching entry bullet behavior) in both seeded and starter templates | section bullets now preserve formatting consistency with quick-add bullets
 - 076 | P4 CV Builder | removed "Section bullets" editor block and related save flow from builder UI to reduce complexity and guide users toward quick-add entry bullets workflow | cleaner form UX with fewer competing bullet paths
+- 077 | P4/P5 UX Tuning | allowed quick-add entries without heading by persisting fallback item title while leaving CV override heading blank; adjusted template typography/spacing (smaller lighter name, larger section gap, and bullet list top-gap + marker indentation alignment) in both seeded and starter templates | entry creation now less rigid and PDF hierarchy spacing closer to requested output
 
 ## Completed phases
 - P1 Foundation
