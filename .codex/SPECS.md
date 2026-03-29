@@ -62,6 +62,8 @@ P6 Propagation
 - 056 | P5 Export | corrected section heading typography to match Overleaf look (normal case, reduced size, cleaner rule tone) | section names now render closer to reference
 - 057 | P4 CV Builder | cleaned section form UX by flattening structure, surfacing only essential quick-add fields, and moving secondary controls into collapsible panels | reduced visual clutter and nesting depth
 - 058 | P4 CV Builder | made builder forms collapsible (add section, quick add entry, section bullets, item edit) to reduce persistent UI noise | cleaner and more focus-oriented editing flow
+- 059 | P5 Export | fixed Vercel preview/export Puppeteer runtime by adding `@sparticuz/chromium` + `puppeteer-core` launch path with Node runtime fallback for local dev | PDF preview/export now environment-compatible
+- 060 | P7 Polish and Hardening | created `.codex/RULES.md` and added initial agent rule for auto-push to main after feature completion | project-level agent rulebook started
 
 ## Completed phases
 - P1 Foundation

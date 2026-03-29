@@ -1,12 +1,35 @@
 import { NextResponse } from "next/server";
 import { currentUser } from "@clerk/nextjs/server";
 import { prisma } from "@cvmake/db";
+import chromium from "@sparticuz/chromium";
+import puppeteerCore from "puppeteer-core";
 import { uploadRawAsset } from "@/lib/cloudinary";
 import { getCVRenderPayload, renderCVHtml } from "@/lib/render-cv";
 import { requireReadyProfile } from "@/lib/profile-guard";
 import { slugify } from "@/lib/utils";
 
 const localChromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+export const runtime = "nodejs";
+
+async function launchBrowser() {
+  if (process.env.VERCEL) {
+    const executablePath = await chromium.executablePath();
+    return puppeteerCore.launch({
+      executablePath,
+      args: chromium.args,
+      defaultViewport: { width: 1200, height: 1697 },
+      headless: true,
+    });
+  }
+
+  const puppeteer = await import("puppeteer");
+
+  return puppeteer.launch({
+    executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || localChromePath,
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+  });
+}
 
 async function buildPdf(cvId: string, profileId: string) {
   const user = await currentUser();
@@ -30,11 +53,7 @@ async function buildPdf(cvId: string, profileId: string) {
   }
 
   const html = renderCVHtml(payload, cv.template.templateHtml);
-  const { launch } = await import("puppeteer");
-  const browser = await launch({
-    executablePath: localChromePath,
-    headless: true,
-  });
+  const browser = await launchBrowser();
   const page = await browser.newPage();
   await page.setContent(html, { waitUntil: "networkidle0" });
   const pdf = await page.pdf({ format: "A4", printBackground: true });
