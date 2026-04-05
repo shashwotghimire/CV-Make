@@ -60,7 +60,7 @@ export default function Home() {
   return (
     <div className="relative overflow-x-hidden">
       {/* ── Sticky Navbar ─────────────────────────────────────── */}
-      <nav className="fixed left-0 right-0 top-0 z-50 border-b border-white/8 bg-slate-950/80 backdrop-blur-xl">
+      <nav aria-label="Main navigation" className="fixed left-0 right-0 top-0 z-50 border-b border-white/8 bg-slate-950/80 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-teal-500 to-cyan-600">
@@ -139,7 +139,7 @@ export default function Home() {
           <div className="landing-fade-in mt-16 md:mt-24" style={{ animationDelay: "400ms" }}>
             <div className="hero-mockup-frame">
               <div className="mockup-titlebar">
-                <div className="flex gap-2">
+                <div aria-hidden="true" className="flex gap-2">
                   <div className="h-3 w-3 rounded-full bg-red-500/70" />
                   <div className="h-3 w-3 rounded-full bg-yellow-500/70" />
                   <div className="h-3 w-3 rounded-full bg-green-500/70" />
@@ -340,7 +340,7 @@ export default function Home() {
               apply faster.
             </h2>
             <p className="mx-auto mt-6 max-w-xl text-lg text-slate-400">
-              Join students and early-career professionals who&apos;ve ditched resume version chaos
+              Join students and early-career professionals who've ditched resume version chaos
               for good.
             </p>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
