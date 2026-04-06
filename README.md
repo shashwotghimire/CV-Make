@@ -1,43 +1,87 @@
 # CV-Make
 
-Starter repository for building and iterating on a CV or resume application.
+A full-stack CV / résumé builder. Create a profile, add your experience, projects, education, and skills, then compose polished CVs from reusable items and export them as PDFs.
 
-## Initialize the repository
+## Tech stack
 
-1. Clone the repository:
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router), React 19 |
+| Styling | Tailwind CSS v4 |
+| Auth | Clerk |
+| Database | PostgreSQL via Prisma |
+| File storage | Cloudinary |
+| PDF export | Puppeteer + `@sparticuz/chromium` |
+| Monorepo | Turborepo + pnpm workspaces |
+
+## Project structure
+
+```
+apps/
+  web/          # Next.js application
+packages/
+  db/           # Prisma schema & client (@cvmake/db)
+  types/        # Shared TypeScript types (@cvmake/types)
+  ui/           # Shared React components (@cvmake/ui)
+```
+
+## Getting started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- pnpm ≥ 10
+- A PostgreSQL database
+- Clerk, and Cloudinary accounts
+
+### Setup
+
+1. Clone and install dependencies:
 
 ```bash
 git clone https://github.com/shashwotghimire/CV-Make.git
 cd CV-Make
+pnpm install
 ```
 
-2. Create the initial project files for your chosen stack.
-3. Add a `.gitignore` suited to the stack you pick.
-4. Create an environment file if the app needs secrets:
+2. Copy the environment template and fill in your values:
 
 ```bash
 cp .env.example .env
 ```
 
-5. Install dependencies once the project is scaffolded:
+| Variable | Description |
+|---|---|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk publishable key |
+| `CLERK_SECRET_KEY` | Clerk secret key |
+| `CLOUDINARY_CLOUD_NAME` | Cloudinary cloud name |
+| `CLOUDINARY_API_KEY` | Cloudinary API key |
+| `CLOUDINARY_API_SECRET` | Cloudinary API secret |
+
+3. Push the database schema:
 
 ```bash
-npm install
+pnpm db:push
 ```
 
-6. Start the development server:
+4. Start the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-## Suggested next steps
+The app will be available at `http://localhost:3000`.
 
-- Decide on the app stack, such as Next.js, React, or another frontend framework.
-- Add project scripts in `package.json`.
-- Document environment variables in `.env.example`.
-- Add linting, formatting, and test setup early.
+## Available scripts
 
-## License
-
-Add a license file if and when you decide how this project should be shared.
+| Command | Description |
+|---|---|
+| `pnpm dev` | Start all apps in development mode |
+| `pnpm build` | Build all apps and packages |
+| `pnpm lint` | Lint all packages |
+| `pnpm typecheck` | Type-check all packages |
+| `pnpm db:generate` | Regenerate Prisma client |
+| `pnpm db:migrate` | Run database migrations |
+| `pnpm db:push` | Push schema changes without migrations |
+| `pnpm db:seed` | Seed the database |
